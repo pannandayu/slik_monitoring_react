@@ -11,6 +11,10 @@ interface DataContextInterface {
   searchParametersPG: InputDataInterface[];
   searchParametersMongo: [{}];
 
+  idNotFoundMongo: boolean;
+
+  resultData: {} | null;
+
   searchStatusHandlerPG: (state: boolean | null) => void;
   searchStatusHandlerMongo: (state: boolean | null) => void;
 
@@ -19,6 +23,10 @@ interface DataContextInterface {
 
   searchParametersPGHandler: (data: InputDataInterface[]) => void;
   searchParametersMongoHandler: (data: [{}]) => void;
+
+  idNotFoundHandlerMongo: (state: boolean) => void;
+
+  resultDataHandler: (data: {}) => void;
 }
 
 const DataContext = React.createContext<DataContextInterface>({
@@ -31,6 +39,10 @@ const DataContext = React.createContext<DataContextInterface>({
   searchParametersPG: [{}],
   searchParametersMongo: [{}],
 
+  resultData: {},
+
+  idNotFoundMongo: false,
+
   searchStatusHandlerPG: () => {},
   searchStatusHandlerMongo: () => {},
 
@@ -39,6 +51,10 @@ const DataContext = React.createContext<DataContextInterface>({
 
   searchParametersPGHandler: () => {},
   searchParametersMongoHandler: () => {},
+
+  resultDataHandler: () => {},
+
+  idNotFoundHandlerMongo: () => {},
 });
 
 export default DataContext;
@@ -64,6 +80,10 @@ export const DataContextProvider: React.FC<{ children?: ReactNode }> = ({
     {},
   ]);
 
+  const [idNotFoundMongo, setIdNotFoundMongo] = useState<boolean>(false);
+
+  const [resultData, setResultData] = useState<{} | null>(null);
+
   const searchStatusHandlerPG = (state: boolean | null) => {
     setSearchStatusPG(state);
   };
@@ -86,6 +106,14 @@ export const DataContextProvider: React.FC<{ children?: ReactNode }> = ({
     setSearchParametersMongo(data);
   };
 
+  const idNotFoundHandlerMongo = (state: boolean) => {
+    setIdNotFoundMongo(state);
+  };
+
+  const resultDataHandler = (data: {}) => {
+    setResultData(data);
+  };
+
   return (
     <DataContext.Provider
       value={{
@@ -95,12 +123,16 @@ export const DataContextProvider: React.FC<{ children?: ReactNode }> = ({
         isSearchingMongo,
         searchParametersPG,
         searchParametersMongo,
+        idNotFoundMongo,
+        resultData,
         searchStatusHandlerPG,
         searchStatusHandlerMongo,
         isSearchingHandlerPG,
         isSearchingHandlerMongo,
         searchParametersPGHandler,
         searchParametersMongoHandler,
+        idNotFoundHandlerMongo,
+        resultDataHandler,
       }}
     >
       {children}

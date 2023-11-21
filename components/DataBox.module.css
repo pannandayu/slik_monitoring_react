@@ -5,12 +5,20 @@
   right: 0;
 }
 
-
 .data-box h2 {
   font-family: "Manrope", Arial, Helvetica, sans-serif;
 }
 
 
-.data-box h2 {
-  font-family: "Manrope", Arial, Helvetica, sans-serif;
+.data-box h3 {
+  font-family: "Mulish"
+}
+
+.frame {
+  display: flex;
+}
+
+.client-data {
+  flex: 1;
+  margin-right: 20px;
 }

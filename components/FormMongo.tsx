@@ -21,6 +21,10 @@ const FormMongo: React.FC<{ switchHandler: (state: boolean) => void }> = ({
     undefined
   );
 
+  const [errorFromServer, setErrorFromServer] = useState<string | undefined>(
+    undefined
+  );
+
   const [errorObject, setErrorObject] = useState<{
     errorPath: string[];
     errorMessage: string[];
@@ -58,8 +62,6 @@ const FormMongo: React.FC<{ switchHandler: (state: boolean) => void }> = ({
 
   const postDataHandler = async (data: { application_id: string }) => {
     try {
-      setButtonDisabled(true);
-
       const appNoMongoRef = await axios.post("/api/search-data-mongo", data);
 
       dataContext.searchParametersMongoHandler([data]);
@@ -67,11 +69,17 @@ const FormMongo: React.FC<{ switchHandler: (state: boolean) => void }> = ({
 
       if (!appNoMongoRef.data.application_no) {
         console.warn("Application ID not found in MongoDB");
-        dataContext.isSearchingHandlerMongo(false);
         dataContext.searchStatusHandlerMongo(false);
-        setButtonDisabled(false);
+        dataContext.isSearchingHandlerMongo(false);
+        dataContext.idNotFoundHandlerMongo(true);
+        setButtonDisabled(undefined);
         return;
+      } else {
+        dataContext.idNotFoundHandlerMongo(false);
       }
+
+      dataContext.searchParametersMongoHandler([data]);
+      dataContext.isSearchingHandlerMongo(true);
 
       const searchDataResponse = await axios.post(
         "/api/search-data-pg",
@@ -82,25 +90,19 @@ const FormMongo: React.FC<{ switchHandler: (state: boolean) => void }> = ({
         searchDataResponse.status === 200 &&
         searchDataResponse.statusText === "OK" &&
         !searchDataResponse.data.error &&
-        searchDataResponse.data[0].personalInfo !== undefined &&
-        searchDataResponse.data[0].personalInfo.length !== 0
+        Object.keys(searchDataResponse.data.personalInfo).length !== 0
       ) {
         dataContext.searchStatusHandlerMongo(true);
+        dataContext.resultDataHandler(searchDataResponse.data);
       } else {
         dataContext.searchStatusHandlerMongo(false);
-        // setButtonDisabled(undefined);
       }
 
       dataContext.isSearchingHandlerMongo(false);
       setButtonDisabled(undefined);
-
-      // setTimeout(() => {
-      //   // TODO -- FOR TESTING
-      //   dataContext.isSearchingHandlerMongo(false);
-      //   setButtonDisabled(undefined);
-      // }, 2000);
     } catch (error: any) {
       console.error(error);
+      setErrorFromServer(error.response.data.message + " using MongoDB Ref");
       dataContext.searchParametersMongoHandler([{}]);
       dataContext.searchStatusHandlerMongo(null);
       dataContext.isSearchingHandlerMongo(null);
@@ -158,6 +160,16 @@ const FormMongo: React.FC<{ switchHandler: (state: boolean) => void }> = ({
           form={"Mongo"}
         />
       )}
+      {dataContext.isSearchingMongo === false &&
+        dataContext.idNotFoundMongo &&
+        dataContext.searchParametersMongo && (
+          <h5 style={{ color: "red", textAlign: "center" }}>
+            Id Not Found in MongoDB
+          </h5>
+        )}
+      <h5 style={{ color: "red" }}>
+        {errorFromServer ? errorFromServer : undefined}
+      </h5>
     </Card>
   );
 };

@@ -16,7 +16,7 @@ const SearchStatus: React.FC<{
     <div style={{ textAlign: "center" }}>
       <h4 style={{ fontWeight: "bold" }}>Last Search Parameter(s)</h4>
       {searchParams.map((items, index) => (
-        <h5 key={Object.keys(items)[0]}>{Object.values(items)[0]}</h5>
+        <h5 key={Object.keys(items)[0] + Math.random().toString()}>{Object.values(items)[0]}</h5>
       ))}
     </div>
   );

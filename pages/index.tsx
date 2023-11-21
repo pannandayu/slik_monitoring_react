@@ -1,11 +1,12 @@
 import FormPG from "@/components/FormPG";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useContext, useState } from "react";
 import styles from "@/styles/Home.module.css";
 import DataBox from "@/components/DataBox";
 import FormMongo from "@/components/FormMongo";
 import { AnimatePresence, motion } from "framer-motion";
 import Card from "@/wrappers/Card";
 import Title from "@/components/Title";
+import DataContext from "@/context/data-context";
 
 export default function Home() {
   const [formIsPG, setFormIsPG] = useState<boolean>(true);
@@ -13,6 +14,9 @@ export default function Home() {
   const setFormIsPGHandler = (state: boolean) => {
     setFormIsPG(state);
   };
+
+  const dataContext = useContext(DataContext);
+  const data = dataContext.resultData;
 
   return (
     <Fragment>
@@ -37,9 +41,11 @@ export default function Home() {
           </motion.div>
         </AnimatePresence>
         <div className={styles["data-box"]}>
-          <Card>
-            <DataBox />
-          </Card>
+          {data && (
+            <Card>
+              <DataBox data={data} />
+            </Card>
+          )}
         </div>
       </div>
     </Fragment>

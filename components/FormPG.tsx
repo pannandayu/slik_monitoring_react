@@ -28,6 +28,10 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
     undefined
   );
 
+  const [errorFromServer, setErrorFromServer] = useState<string | undefined>(
+    undefined
+  );
+
   const dataContext = useContext(DataContext);
 
   const errorClassName = `${inputStyles.input} ${inputStyles["input-error"]}`;
@@ -89,33 +93,27 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
       setButtonDisabled(true);
 
       const searchDataResponse = await axios.post("/api/search-data-pg", data);
-      console.log(searchDataResponse);
 
-      if (
+      if (searchDataResponse.data.noParams) {
+        dataContext.searchStatusHandlerPG(false);
+        dataContext.searchParametersPGHandler([searchDataResponse.data]);
+      } else if (
         searchDataResponse.status === 200 &&
         searchDataResponse.statusText === "OK" &&
         !searchDataResponse.data.error &&
-        searchDataResponse.data[0].personalInfo !== undefined &&
-        searchDataResponse.data[0].personalInfo.length !== 0
+        Object.keys(searchDataResponse.data.personalInfo).length !== 0
       ) {
         dataContext.searchStatusHandlerPG(true);
-      } else if (searchDataResponse.data[0].noParams) {
-        dataContext.searchParametersPGHandler([searchDataResponse.data[0]]);
+        dataContext.resultDataHandler(searchDataResponse.data);
       } else {
         dataContext.searchStatusHandlerPG(false);
-        // setButtonDisabled(undefined);
       }
 
       dataContext.isSearchingHandlerPG(false);
       setButtonDisabled(undefined);
-
-      // setTimeout(() => {
-      //   // TODO -- FOR TESTING
-      //   dataContext.isSearchingHandlerPG(false);
-      //   setButtonDisabled(undefined);
-      // }, 2000);
     } catch (error: any) {
       console.error(error);
+      setErrorFromServer(error.response.data.message);
       dataContext.searchParametersPGHandler([{}]);
       dataContext.searchStatusHandlerPG(null);
       dataContext.isSearchingHandlerPG(null);
@@ -214,6 +212,9 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
           form={"PG"}
         />
       )}
+      <h5 style={{ color: "red" }}>
+        {errorFromServer ? errorFromServer : undefined}
+      </h5>
     </Card>
   );
 };
