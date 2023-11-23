@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import styles from "@/wrappers/NavBar.module.css";
+import styles from "@/styles/NavBar.module.css";
 import { AnimatePresence, motion } from "framer-motion";
 import NavItems from "@/components/NavItems";
 import Link from "next/link";
@@ -19,7 +19,7 @@ const NavBar: React.FC = () => {
             <h1>SLIK Monitoring Dashboard</h1>
           </div>
           <NavItems href="/" title="Search" />
-          <NavItems href="/tes" title="TES" />
+          <NavItems href="/statistics" title="Statistics" />
           <Link href="https://phabricator.muf.co.id" target="_blank">
             <img className={styles.image} src="/muf.png" alt="Logo MUF" />
           </Link>

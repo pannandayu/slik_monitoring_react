@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import styles from "./SearchParameters.module.css";
+import styles from "@/styles/SearchParameters.module.css";
 import { Fragment, useContext } from "react";
 import DataContext from "@/context/data-context";
 
@@ -18,7 +18,7 @@ const SearchParameters: React.FC<{ form: string }> = ({ form }) => {
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -50 }}
-          transition={{ type: "spring", stiffness: 250, damping: 20, delay: 2 }}
+          transition={{ type: "spring", stiffness: 250, damping: 20, delay: 0.5 }}
         >
           <motion.h2
             animate={{
@@ -26,7 +26,7 @@ const SearchParameters: React.FC<{ form: string }> = ({ form }) => {
               transition: { duration: 1, repeat: Infinity },
             }}
           >
-            Now searching...
+            Please wait. Now searching...
           </motion.h2>
           <h4>
             <b>Parameters:</b>

@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { motion } from "framer-motion";
-import styles from "@/wrappers/NavBar.module.css";
+import styles from "@/styles/NavBar.module.css";
 
 const Content: React.FC<{ children?: ReactNode }> = ({ children }) => {
   return (

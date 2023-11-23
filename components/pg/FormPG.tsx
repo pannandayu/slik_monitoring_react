@@ -1,7 +1,7 @@
 import { useContext, useRef, useState } from "react";
-import Input from "./Input";
-import styles from "./Form.module.css";
-import inputStyles from "./Input.module.css";
+import Input from "../Input";
+import styles from "@/styles/Form.module.css";
+import inputStyles from "@/styles/Input.module.css";
 import { motion } from "framer-motion";
 import InputDataPGSchema from "@/validations/InputDataPGSchema";
 import axios from "axios";
@@ -9,7 +9,7 @@ import InputDataInterface from "@/interfaces/InputDataInterface";
 import { ZodIssue } from "zod";
 import Card from "@/wrappers/Card";
 import DataContext from "@/context/data-context";
-import SearchStatus from "./SearchStatus";
+import SearchStatus from "../SearchStatus";
 
 const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
   switchHandler,
@@ -28,7 +28,7 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
     undefined
   );
 
-  const [errorFromServer, setErrorFromServer] = useState<string | undefined>(
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined
   );
 
@@ -38,6 +38,12 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
 
   const submitHandler: React.FormEventHandler = (event: React.FormEvent) => {
     event.preventDefault();
+
+    setButtonDisabled(true);
+    setErrorMessage(undefined);
+    dataContext.searchParametersPGHandler([{}]);
+    dataContext.searchStatusHandlerPG(null);
+    dataContext.isSearchingHandlerPG(null);
 
     const orderId = orderIdRef.current?.value;
     const appId = appIdRef.current?.value;
@@ -90,7 +96,6 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
   const postDataHandler = async (data: InputDataInterface) => {
     try {
       dataContext.isSearchingHandlerPG(true);
-      setButtonDisabled(true);
 
       const searchDataResponse = await axios.post("/api/search-data-pg", data);
 
@@ -101,22 +106,25 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
         searchDataResponse.status === 200 &&
         searchDataResponse.statusText === "OK" &&
         !searchDataResponse.data.error &&
-        Object.keys(searchDataResponse.data.personalInfo).length !== 0
+        searchDataResponse.data.personalInfo !== undefined
       ) {
         dataContext.searchStatusHandlerPG(true);
-        dataContext.resultDataHandler(searchDataResponse.data);
+        dataContext.resultDataPGHandler({
+          ...searchDataResponse.data,
+          form: "PG",
+        });
       } else {
         dataContext.searchStatusHandlerPG(false);
+        setErrorMessage("Data in PostgreSQL is not complete.");
       }
 
       dataContext.isSearchingHandlerPG(false);
       setButtonDisabled(undefined);
     } catch (error: any) {
       console.error(error);
-      setErrorFromServer(error.response.data.message);
-      dataContext.searchParametersPGHandler([{}]);
-      dataContext.searchStatusHandlerPG(null);
-      dataContext.isSearchingHandlerPG(null);
+      dataContext.searchStatusHandlerPG(false);
+      dataContext.isSearchingHandlerPG(false);
+      setErrorMessage(error.response.data.message);
       setButtonDisabled(undefined);
     }
   };
@@ -125,7 +133,7 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
     <Card>
       <form className={styles.form} onSubmit={submitHandler}>
         <Input
-          labelName="No. Aplikasi (alias Order ID)"
+          labelName="No. Aplikasi / Order ID"
           idForName="application-no"
           type="text"
           className={
@@ -212,9 +220,9 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
           form={"PG"}
         />
       )}
-      <h5 style={{ color: "red" }}>
-        {errorFromServer ? errorFromServer : undefined}
-      </h5>
+      <h4 style={{ color: "red", textAlign: "center" }}>
+        {errorMessage ? errorMessage : undefined}
+      </h4>
     </Card>
   );
 };

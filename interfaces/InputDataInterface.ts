@@ -3,4 +3,5 @@ export default interface InputDataInterface {
   app_id?: string;
   nama_nasabah?: string;
   no_ktp?: string;
+  noParams?: string 
 }

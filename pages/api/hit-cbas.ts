@@ -1,11 +1,12 @@
-import type { NextApiRequest, NextApiResponse } from "next";
+import { NextApiResponse } from "next";
+import { NextApiRequest } from "next";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   try {
-    const request = await fetch("http://localhost:9019/api/search-data", {
+    const request = await fetch("http://10.22.17.81/cbasws/getcategory", {
       body: JSON.stringify(req.body),
       method: req.method,
       headers: { "Content-Type": "application/json" },
@@ -13,10 +14,8 @@ export default async function handler(
     const data = await request.json();
     res.status(200).json(data);
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: `Data in PostgreSQL DB is not found.`,
-      });
+    res.status(400).json({
+      message: error,
+    });
   }
 }

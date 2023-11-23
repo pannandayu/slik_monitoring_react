@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
-import styles from "@/styles/Card.module.css";
+import styles from "@/styles/CardDataBox.module.css";
 
-const Card: React.FC<{ children?: ReactNode }> = ({ children }) => {
+const CardDataBox: React.FC<{ children?: ReactNode }> = ({ children }) => {
   return (
     <div className={styles.card}>
       <div className={styles["card-content"]}>{children}</div>
@@ -9,4 +9,4 @@ const Card: React.FC<{ children?: ReactNode }> = ({ children }) => {
   );
 };
 
-export default Card;
+export default CardDataBox;
