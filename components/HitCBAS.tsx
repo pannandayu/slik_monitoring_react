@@ -93,17 +93,11 @@ const HitCBAS: React.FC<{
     setHitCbas(false);
   };
 
-  useEffect(() => {
-    console.log(cbasDataPersonal);
-    console.log(cbasDataSpouse);
-    console.log(cbasDataAggregate);
-  }, [cbasDataPersonal, cbasDataSpouse, cbasDataAggregate]);
-
   const personalResponseBox = (
     <CardDataBox>
       <div className={styles.frame}>
         <div>
-          <h2 style={{ marginTop: "1rem", color: "#008001" }}>
+          <h2 style={{ marginTop: "1rem", color: "#CA5305" }}>
             Personal Response
           </h2>
           <h4>Name: {cbasDataPersonal.content.namaDebitur}</h4>
@@ -130,7 +124,7 @@ const HitCBAS: React.FC<{
     <CardDataBox>
       <div className={styles.frame}>
         <div>
-          <h2 style={{ marginTop: "1rem", color: "#008001" }}>
+          <h2 style={{ marginTop: "1rem", color: "#CA5305" }}>
             Spouse Response
           </h2>
           <h4>Name: {cbasDataSpouse.content.namaDebitur}</h4>
@@ -157,7 +151,7 @@ const HitCBAS: React.FC<{
     <CardDataBox>
       <div className={styles.frame}>
         <div>
-          <h2 style={{ marginTop: "1rem", color: "#008001" }}>
+          <h2 style={{ marginTop: "1rem", color: "#CA5305" }}>
             Aggregate Response
           </h2>
           <h4>
