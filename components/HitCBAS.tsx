@@ -1,10 +1,10 @@
 import styles from "@/styles/DataBox.module.css";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import CBASGradingContentInterface from "@/interfaces/CBASGradingContentInterface";
-import Card from "@/wrappers/Card";
+import CBASGradingPersonalAndSpouseInterface from "@/interfaces/CBASGradingPersonalAndSpouseInterface";
 import CardDataBox from "@/wrappers/CardDataBox";
+import CBASGradingAggregateInterface from "@/interfaces/CBASGradingAggregateInterface";
 
 const HitCBAS: React.FC<{
   requestId: string;
@@ -15,7 +15,7 @@ const HitCBAS: React.FC<{
 
   const [searchingCbas, setSearchingCbas] = useState<boolean>(false);
   const [cbasDataPersonal, setCbasDataPersonal] =
-    useState<CBASGradingContentInterface>({
+    useState<CBASGradingPersonalAndSpouseInterface>({
       responseCode: "",
       content: {
         nikDebitur: "",
@@ -27,13 +27,22 @@ const HitCBAS: React.FC<{
     });
 
   const [cbasDataSpouse, setCbasDataSpouse] =
-    useState<CBASGradingContentInterface>({
+    useState<CBASGradingPersonalAndSpouseInterface>({
       responseCode: "",
       content: {
         nikDebitur: "",
         namaDebitur: "",
         tanggalPermintaan: "",
         kategoriDebitur: "",
+        color: "",
+      },
+    });
+
+  const [cbasDataAggregate, setCbasDataAggregate] =
+    useState<CBASGradingAggregateInterface>({
+      responseCode: "",
+      contentDebitur: {
+        kategoriAgregat: "",
         color: "",
       },
     });
@@ -46,6 +55,8 @@ const HitCBAS: React.FC<{
 
     let cbasPersonalResponse;
     let cbasSpouseResponse;
+    let cbasAggregateResponse;
+
     let appIdPersonal = requestId + "101";
     let appIdSpouse = requestId + "102";
 
@@ -58,19 +69,113 @@ const HitCBAS: React.FC<{
         appId: appIdSpouse,
         type: "category",
       });
+      cbasAggregateResponse = await axios.post("/api/hit-cbas", {
+        requestId,
+        type: "agregat_ind",
+      });
       setCbasDataPersonal(cbasPersonalResponse.data);
       setCbasDataSpouse(cbasSpouseResponse.data);
+      setCbasDataAggregate(cbasAggregateResponse.data);
     } else {
       cbasPersonalResponse = await axios.post("/api/hit-cbas", {
         appId: appIdPersonal,
         type: "category",
       });
+      cbasAggregateResponse = await axios.post("/api/hit-cbas", {
+        requestId,
+        type: "agregat_ind",
+      });
       setCbasDataPersonal(cbasPersonalResponse.data);
+      setCbasDataAggregate(cbasAggregateResponse.data);
     }
 
     setSearchingCbas(false);
     setHitCbas(false);
   };
+
+  useEffect(() => {
+    console.log(cbasDataPersonal);
+    console.log(cbasDataSpouse);
+    console.log(cbasDataAggregate);
+  }, [cbasDataPersonal, cbasDataSpouse, cbasDataAggregate]);
+
+  const personalResponseBox = (
+    <CardDataBox>
+      <div className={styles.frame}>
+        <div>
+          <h2 style={{ marginTop: "1rem", color: "#008001" }}>
+            Personal Response
+          </h2>
+          <h4>Name: {cbasDataPersonal.content.namaDebitur}</h4>
+          <h4>
+            Request Date: {cbasDataPersonal.content.tanggalPermintaan || "-"}
+          </h4>
+          <h4>
+            Category:{" "}
+            <span
+              style={{
+                backgroundColor: `${cbasDataPersonal.content.color}`,
+                padding: "0.5rem",
+                borderRadius: "10px",
+              }}
+            >
+              {cbasDataPersonal.content.kategoriDebitur}
+            </span>
+          </h4>
+        </div>
+      </div>
+    </CardDataBox>
+  );
+  const spouseResponseBox = (
+    <CardDataBox>
+      <div className={styles.frame}>
+        <div>
+          <h2 style={{ marginTop: "1rem", color: "#008001" }}>
+            Spouse Response
+          </h2>
+          <h4>Name: {cbasDataSpouse.content.namaDebitur}</h4>
+          <h4>
+            Request Date: {cbasDataSpouse.content.tanggalPermintaan || "-"}
+          </h4>
+          <h4>
+            Category:{" "}
+            <span
+              style={{
+                backgroundColor: `${cbasDataSpouse.content.color}`,
+                padding: "0.5rem",
+                borderRadius: "10px",
+              }}
+            >
+              {cbasDataSpouse.content.kategoriDebitur}
+            </span>
+          </h4>
+        </div>
+      </div>
+    </CardDataBox>
+  );
+  const aggregateResponseBox = (
+    <CardDataBox>
+      <div className={styles.frame}>
+        <div>
+          <h2 style={{ marginTop: "1rem", color: "#008001" }}>
+            Aggregate Response
+          </h2>
+          <h4>
+            Category:{" "}
+            <span
+              style={{
+                backgroundColor: `${cbasDataAggregate.contentDebitur.color}`,
+                padding: "0.5rem",
+                borderRadius: "10px",
+              }}
+            >
+              {cbasDataAggregate.contentDebitur.kategoriAgregat}
+            </span>
+          </h4>
+        </div>
+      </div>
+    </CardDataBox>
+  );
 
   return (
     <div className={styles["client-data"]}>
@@ -121,86 +226,39 @@ const HitCBAS: React.FC<{
         cbasDataPersonal.responseCode === "1" ? (
           maritalStatus === "01" ? (
             <div style={{ display: "flex", gap: "100px" }}>
-              <CardDataBox>
+              {personalResponseBox}
+              {cbasDataSpouse.responseCode === "1" ? (
+                spouseResponseBox
+              ) : (
                 <div className={styles.frame}>
                   <div>
-                    <h2 style={{ marginTop: "1rem", color: "#008001" }}>
-                      Personal Response
-                    </h2>
-                    <h4>Name: {cbasDataPersonal.content.namaDebitur}</h4>
-                    <h4>
-                      Request Date:{" "}
-                      {cbasDataPersonal.content.tanggalPermintaan || "-"}
-                    </h4>
-                    <h4>
-                      Category:{" "}
-                      <span
-                        style={{
-                          backgroundColor: `${cbasDataPersonal.content.color}`,
-                          padding: "0.5rem",
-                          borderRadius: "10px",
-                        }}
-                      >
-                        {cbasDataPersonal.content.kategoriDebitur}
-                      </span>
-                    </h4>
+                    <h2 style={{ color: "red" }}>Spouse data not found.</h2>
                   </div>
                 </div>
-              </CardDataBox>
-              <CardDataBox>
+              )}
+              {cbasDataAggregate.responseCode === "1" ? (
+                aggregateResponseBox
+              ) : (
                 <div className={styles.frame}>
                   <div>
-                    <h2 style={{ marginTop: "1rem", color: "#008001" }}>
-                      Spouse Response
-                    </h2>
-                    <h4>Name: {cbasDataSpouse.content.namaDebitur}</h4>
-                    <h4>
-                      Request Date:{" "}
-                      {cbasDataSpouse.content.tanggalPermintaan || "-"}
-                    </h4>
-                    <h4>
-                      Category:{" "}
-                      <span
-                        style={{
-                          backgroundColor: `${cbasDataSpouse.content.color}`,
-                          padding: "0.5rem",
-                          borderRadius: "10px",
-                        }}
-                      >
-                        {cbasDataSpouse.content.kategoriDebitur}
-                      </span>
-                    </h4>
+                    <h2 style={{ color: "red" }}>Aggregate data not found.</h2>
                   </div>
                 </div>
-              </CardDataBox>
+              )}
             </div>
           ) : (
-            <CardDataBox>
-              <div className={styles.frame}>
-                <div>
-                  <h2 style={{ marginTop: "1rem", color: "#008001" }}>
-                    Response
-                  </h2>
-                  <h4>Name: {cbasDataPersonal.content.namaDebitur}</h4>
-                  <h4>
-                    Request Date:{" "}
-                    {cbasDataPersonal.content.tanggalPermintaan || "-"}
-                  </h4>
-                  <h4>
-                    Category:{" "}
-                    <span
-                      style={{
-                        backgroundColor: `${cbasDataPersonal.content.color}`,
-                        padding: "0.5rem",
-                        borderRadius: "10px",
-                      }}
-                    >
-                      {cbasDataPersonal.content.kategoriDebitur}
-                    </span>
-                  </h4>
+            <div style={{ display: "flex", gap: "100px" }}>
+              {personalResponseBox}
+              {cbasDataAggregate.responseCode === "1" ? (
+                aggregateResponseBox
+              ) : (
+                <div className={styles.frame}>
+                  <div>
+                    <h2 style={{ color: "red" }}>Aggregate data not found.</h2>
+                  </div>
                 </div>
-              </div>
-            </CardDataBox>
+              )}
+            </div>
           )
         ) : (
           <div className={styles.frame}>

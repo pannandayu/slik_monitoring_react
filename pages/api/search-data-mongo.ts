@@ -1,10 +1,11 @@
 import { MongoClient } from "mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const client = new MongoClient(
-    "mongodb://dev_revamp:dev_revamp@10.22.17.69:27017/?authSource=admin&readPreference=primary&directConnection=true&ssl=false"
-  );
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  const client = new MongoClient(`${process.env.MONGO_URI}`);
 
   try {
     await client.connect();

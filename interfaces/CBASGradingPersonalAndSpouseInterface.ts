@@ -1,4 +1,4 @@
-interface CBASGradingContentInterface {
+interface CBASGradingPersonalAndSpouse {
   responseCode: string;
   content: {
     nikDebitur: string;
@@ -9,4 +9,4 @@ interface CBASGradingContentInterface {
   };
 }
 
-export default CBASGradingContentInterface;
+export default CBASGradingPersonalAndSpouse;

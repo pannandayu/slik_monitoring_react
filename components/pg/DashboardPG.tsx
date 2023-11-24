@@ -7,7 +7,7 @@ import PersonalInfoPG from "./PersonalInfoPG";
 import SpouseInfoPG from "./SpouseInfoPG";
 import styles from "@/styles/DataBox.module.css";
 import SLIKRequestAttemptPG from "./SLIKRequestAttempt";
-import GradingResultHistoryPG from "./GradinResultHistoryPG";
+import GradingResultHistoryPG from "./GradingResultHistoryPG";
 import GradingResultPGInterface from "@/interfaces/pg/GradingResultPGInterface";
 import HitCBAS from "../HitCBAS";
 

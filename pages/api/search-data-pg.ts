@@ -5,7 +5,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    const request = await fetch("http://localhost:9019/api/search-data", {
+    const request = await fetch(`${process.env.JAVA_URL}`, {
       body: JSON.stringify(req.body),
       method: req.method,
       headers: { "Content-Type": "application/json" },

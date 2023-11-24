@@ -6,7 +6,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    const request = await fetch("http://10.22.17.81/cbasws/getcategory", {
+    const request = await fetch(`${process.env.CBAS_URL}`, {
       body: JSON.stringify(req.body),
       method: req.method,
       headers: { "Content-Type": "application/json" },
