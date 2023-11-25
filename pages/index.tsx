@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from "react";
 import Title from "@/components/Title";
-import FormSwitch from "@/components/FormSwitch";
-import DataBoxSwitch from "@/components/DataBoxSwitch";
+import FormSwitch from "@/wrappers/FormSwitch";
+import DashboardSwitch from "@/wrappers/DashboardSwitch";
 
 export default function Home() {
   const [formIsPG, setFormIsPG] = useState<boolean>(true);
@@ -20,7 +20,7 @@ export default function Home() {
           formIsPG={formIsPG}
           onClickSwitchForm={setFormIsPGHandler}
         />
-        <DataBoxSwitch formIsPG={formIsPG} />
+        <DashboardSwitch formIsPG={formIsPG} />
       </div>
     </Fragment>
   );

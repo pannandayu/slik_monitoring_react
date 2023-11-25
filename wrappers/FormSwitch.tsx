@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
-import FormPG from "./pg/FormPG";
-import FormMongo from "./FormMongo";
+import FormPG from "../components/pg/FormPG";
+import FormMongo from "../components/FormMongo";
 import styles from "@/styles/Home.module.css";
 
 const FormSwitch: React.FC<{

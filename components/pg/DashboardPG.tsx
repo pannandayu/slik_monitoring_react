@@ -13,18 +13,25 @@ import HitCBAS from "../HitCBAS";
 
 const DashboardPG: React.FC<{
   data: {
-    lastRequestLevel: any;
-    personalInfo: any;
-    spouseInfo: any;
-    slikResponseLog: any;
-    screeningResults: any;
+    lastRequestLevel: {
+      lastRequestLevelDebiturUtama: string;
+      lastRequestLevelPasangan: string;
+    };
+    personalInfo: PersonalInfoPGInterface;
+    spouseInfo: MaritalStatusAndSpousePGInterface;
+    slikResponseLog: SLIKRequestAttemptPGnterface[];
+    screeningResults: GradingResultPGInterface;
   };
 }> = ({ data }) => {
   const [key, setKey] = useState<number>(0);
 
-  useEffect(() => {
-    setKey((prevKey) => prevKey + 1);
-  }, [data]);
+  const {
+    lastRequestLevel,
+    personalInfo,
+    spouseInfo,
+    slikResponseLog,
+    screeningResults,
+  } = data;
 
   const [personalInfoPG, setPersonalInfoPG] = useState<PersonalInfoPGInterface>(
     {
@@ -90,17 +97,18 @@ const DashboardPG: React.FC<{
     });
 
   useEffect(() => {
+    setKey((prevKey) => prevKey + 1);
     setPersonalInfoPG({
-      ...data.personalInfo,
+      ...personalInfo,
       lastRequestLevelDebiturUtama:
-        data.lastRequestLevel.lastRequestLevelDebiturUtama,
+        lastRequestLevel.lastRequestLevelDebiturUtama,
     });
     setSpouseInfoPG({
-      ...data.spouseInfo,
-      lastRequestLevelPasangan: data.lastRequestLevel.lastRequestLevelPasangan,
+      ...spouseInfo,
+      lastRequestLevelPasangan: lastRequestLevel.lastRequestLevelPasangan,
     });
-    setSlikRequestInfoPG(data.slikResponseLog);
-    setGradingResultHistoryPG(data.screeningResults);
+    setSlikRequestInfoPG(slikResponseLog);
+    setGradingResultHistoryPG(screeningResults);
   }, [data]);
 
   return (

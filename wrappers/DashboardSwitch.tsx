@@ -1,11 +1,11 @@
 import DataContext from "@/context/data-context";
 import CardDataBox from "@/wrappers/CardDataBox";
-import DataBox from "@/wrappers/DataBox";
 import { motion, AnimatePresence } from "framer-motion";
 import { ReactNode, useContext, useEffect, useState } from "react";
 import styles from "@/styles/Home.module.css";
+import DashboardPG from "../components/pg/DashboardPG";
 
-const DataBoxSwitch: React.FC<{ formIsPG: boolean }> = ({ formIsPG }) => {
+const DashboardSwitch: React.FC<{ formIsPG: boolean }> = ({ formIsPG }) => {
   const dataContext = useContext(DataContext);
   const dataPG = dataContext.resultDataPG;
   const dataMongo = dataContext.resultDataMongo;
@@ -58,19 +58,19 @@ const DataBoxSwitch: React.FC<{ formIsPG: boolean }> = ({ formIsPG }) => {
       >
         {!dataPG && !dataMongo && intro}
 
-        {formIsPG && dataPG && (
+        {formIsPG && dataPG?.form === "PG" && dataPG && (
           <CardDataBox>
-            <DataBox data={dataPG} />
+            <DashboardPG data={dataPG} />
           </CardDataBox>
         )}
-        {!formIsPG && dataMongo && (
+        {/* {!formIsPG && dataMongo && (
           <CardDataBox>
             <DataBox data={dataMongo} />
-          </CardDataBox>
-        )}
+          </CardDataBox> TODO BUAT SEARCH BY MONGO
+        )} */}
       </motion.div>
     </AnimatePresence>
   );
 };
 
-export default DataBoxSwitch;
+export default DashboardSwitch;

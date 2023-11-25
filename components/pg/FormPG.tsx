@@ -10,6 +10,11 @@ import { ZodIssue } from "zod";
 import Card from "@/wrappers/Card";
 import DataContext from "@/context/data-context";
 import SearchStatus from "../SearchStatus";
+import AllPGDataInterface from "@/interfaces/pg/AllPGDataInterface";
+import PersonalInfoPGInterface from "@/interfaces/pg/PersonalInfoPGInterface";
+import GradingResultPGInterface from "@/interfaces/pg/GradingResultPGInterface";
+import SLIKRequestAttemptPGnterface from "@/interfaces/pg/SLIKRequestAttemptPGInterface";
+import MaritalStatusAndSpousePGInterface from "@/interfaces/pg/MaritalStatusAndSpousePGInterface";
 
 const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
   switchHandler,
@@ -45,10 +50,10 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
     dataContext.searchStatusHandlerPG(null);
     dataContext.isSearchingHandlerPG(null);
 
-    const orderId = orderIdRef.current?.value;
-    const appId = appIdRef.current?.value;
-    const namaDebitur = namaDebiturRef.current?.value;
-    const noKtp = noKtpRef.current?.value;
+    const orderId = orderIdRef.current?.value.trim();
+    const appId = appIdRef.current?.value.trim();
+    const namaDebitur = namaDebiturRef.current?.value.trim();
+    const noKtp = noKtpRef.current?.value.trim();
 
     const inputData: InputDataInterface = {
       application_no: orderId,
@@ -90,6 +95,7 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
       const errorMessage = zodErrors.map((e) => e.message.toString());
 
       setErrorObject({ errorPath, errorMessage });
+      setButtonDisabled(undefined);
     }
   };
 
@@ -97,7 +103,22 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
     try {
       dataContext.isSearchingHandlerPG(true);
 
-      const searchDataResponse = await axios.post("/api/search-data-pg", data);
+      const searchDataResponse: {
+        status: number;
+        statusText: string;
+        data: {
+          noParams?: string;
+          error?: any;
+          lastRequestLevel: {
+            lastRequestLevelDebiturUtama: string;
+            lastRequestLevelPasangan: string;
+          };
+          personalInfo: PersonalInfoPGInterface;
+          screeningResults: GradingResultPGInterface;
+          slikResponseLog: SLIKRequestAttemptPGnterface[];
+          spouseInfo: MaritalStatusAndSpousePGInterface;
+        };
+      } = await axios.post("/api/search-data-pg", data);
 
       if (searchDataResponse.data.noParams) {
         dataContext.searchStatusHandlerPG(false);
@@ -105,8 +126,8 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
       } else if (
         searchDataResponse.status === 200 &&
         searchDataResponse.statusText === "OK" &&
-        !searchDataResponse.data.error &&
-        searchDataResponse.data.personalInfo !== undefined
+        searchDataResponse.data.personalInfo !== undefined &&
+        !searchDataResponse.data.error
       ) {
         dataContext.searchStatusHandlerPG(true);
         dataContext.resultDataPGHandler({
