@@ -13,7 +13,9 @@ export default function Home(props: { password: string }) {
 
   const authHandler: React.FormEventHandler = (event: FormEvent) => {
     event.preventDefault();
-    console.log(props.password);
+    if (authRef.current?.value === props.password) {
+      setAuth(true);
+    }
   };
 
   const authRef = useRef<HTMLInputElement>(null);
