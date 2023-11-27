@@ -23,5 +23,6 @@ export default async function handler(
       .status(500)
       .json({ message: "Error from server while searching by MongoDB" });
   } finally {
+    client.close();
   }
 }

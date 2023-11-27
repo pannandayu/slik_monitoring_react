@@ -61,17 +61,25 @@ const FormMongo: React.FC<{ switchHandler: (state: boolean) => void }> = ({
     }
   };
 
-  const postDataHandler = async (data: { application_id: string }) => {
+  const postDataHandler = async (inputData: { application_id: string }) => {
     try {
-      const resultMongo = await axios.post("/api/search-data-mongo", data);
+      const resultMongo = await fetch("/api/search-data-mongo", {
+        method: "POST",
+        body: JSON.stringify(inputData),
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const data = await resultMongo.json();
+      console.log(data);
 
       dataContext.isSearchingHandlerMongo(true);
 
-      console.log(resultMongo);
-
-      if (resultMongo.data) {
+      if (data) {
         dataContext.searchStatusHandlerMongo(true);
-        dataContext.resultDataMongoHandler({ ...resultMongo.data, form: "MONGO" });
+        dataContext.resultDataMongoHandler({
+          ...data,
+          form: "MONGO",
+        });
       } else {
         dataContext.searchStatusHandlerMongo(false);
       }
