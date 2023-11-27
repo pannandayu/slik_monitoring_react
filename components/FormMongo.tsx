@@ -63,12 +63,12 @@ const FormMongo: React.FC<{ switchHandler: (state: boolean) => void }> = ({
 
   const postDataHandler = async (data: { application_id: string }) => {
     try {
-      const resultMongo = await axios.post("/api/search-data-mongo", data);
-
       const testApi = await axios.get(
         "https://jsonplaceholder.typicode.com/posts"
       );
       console.log(testApi);
+      const resultMongo = await axios.post("/api/search-data-mongo", data);
+
 
       dataContext.isSearchingHandlerMongo(true);
 
