@@ -63,6 +63,16 @@ const FormMongo: React.FC<{ switchHandler: (state: boolean) => void }> = ({
 
   const postDataHandler = async (inputData: { application_id: string }) => {
     try {
+      const tes = await fetch("/api/test");
+      console.log("tes");
+      const tesresponse = await tes.json();
+      console.log(tesresponse);
+
+      const tes2 = await fetch("/api/test2");
+      console.log("tes2");
+      const tesresponse2 = await tes2.json();
+      console.log(tesresponse2);
+
       const requestMongo = await fetch("/api/search-data-mongo", {
         body: JSON.stringify(inputData),
         headers: {
@@ -75,7 +85,6 @@ const FormMongo: React.FC<{ switchHandler: (state: boolean) => void }> = ({
       console.log(resultMongo);
 
       dataContext.isSearchingHandlerMongo(true);
-
 
       if (resultMongo) {
         dataContext.searchStatusHandlerMongo(true);
