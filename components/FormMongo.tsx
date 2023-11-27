@@ -7,7 +7,6 @@ import React, { useContext, useRef, useState } from "react";
 import InputDataMongoSchema from "@/validations/InputDataMongoSchema";
 import { ZodIssue } from "zod";
 import DataContext from "@/context/data-context";
-import axios, { AxiosResponse } from "axios";
 import SearchStatus from "./SearchStatus";
 
 const FormMongo: React.FC<{ switchHandler: (state: boolean) => void }> = ({
@@ -44,6 +43,10 @@ const FormMongo: React.FC<{ switchHandler: (state: boolean) => void }> = ({
     if (validation.success) {
       console.log("Data is valid ==>", validation.data);
       console.log("Sending your request!");
+      setErrorMessage(undefined);
+      dataContext.searchParametersMongoHandler([{}]);
+      dataContext.searchStatusHandlerMongo(null);
+      dataContext.isSearchingHandlerMongo(null);
       dataContext.searchParametersMongoHandler([inputData]);
 
       postDataHandler(validation.data);
@@ -58,31 +61,26 @@ const FormMongo: React.FC<{ switchHandler: (state: boolean) => void }> = ({
       const errorMessage = zodErrors.map((e) => e.message.toString());
 
       setErrorObject({ errorPath, errorMessage });
+      setButtonDisabled(undefined);
     }
   };
 
   const postDataHandler = async (inputData: { application_id: string }) => {
+    dataContext.isSearchingHandlerMongo(true);
+
     try {
-      const tes = await fetch("/api/test");
-      console.log("tes");
-      const tesresponse = await tes.json();
-      console.log(tesresponse);
-
-      const tes2 = await fetch("/api/test2");
-      console.log("tes2");
-      const tesresponse2 = await tes2.json();
-      console.log(tesresponse2);
-
-      const requestMongo = await fetch("/api/search-data-mongo", {
+      const requestMongo: {
+        ok: boolean;
+        status: number;
+        statusText: string;
+        json: () => Promise<any>;
+      } = await fetch("/api/search-data-mongo", {
         body: JSON.stringify(inputData),
-        headers: {
-          "Content-Type": "application-json",
-        },
         method: "POST",
+        headers: { "Content-Type": "application/json" },
       });
 
       const resultMongo = await requestMongo.json();
-      console.log(resultMongo);
 
       dataContext.isSearchingHandlerMongo(true);
 
@@ -94,6 +92,7 @@ const FormMongo: React.FC<{ switchHandler: (state: boolean) => void }> = ({
         });
       } else {
         dataContext.searchStatusHandlerMongo(false);
+        setErrorMessage("Data not found in Mongo DB");
       }
 
       dataContext.isSearchingHandlerMongo(false);
@@ -101,7 +100,6 @@ const FormMongo: React.FC<{ switchHandler: (state: boolean) => void }> = ({
     } catch (error: any) {
       console.error(error);
       setErrorMessage(error.toString());
-      dataContext.searchParametersMongoHandler([{}]);
       dataContext.searchStatusHandlerMongo(null);
       dataContext.isSearchingHandlerMongo(null);
       setButtonDisabled(undefined);
@@ -158,7 +156,7 @@ const FormMongo: React.FC<{ switchHandler: (state: boolean) => void }> = ({
           form={"Mongo"}
         />
       )}
-      <h5 style={{ color: "red" }}>
+      <h5 style={{ color: "red", textAlign: "center" }}>
         {errorMessage ? errorMessage : undefined}
       </h5>
     </Card>

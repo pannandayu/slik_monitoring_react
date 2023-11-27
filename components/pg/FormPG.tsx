@@ -4,7 +4,6 @@ import styles from "@/styles/Form.module.css";
 import inputStyles from "@/styles/Input.module.css";
 import { motion } from "framer-motion";
 import InputDataPGSchema from "@/validations/InputDataPGSchema";
-import axios from "axios";
 import InputDataInterface from "@/interfaces/InputDataInterface";
 import { ZodIssue } from "zod";
 import Card from "@/wrappers/Card";
@@ -98,53 +97,66 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
     }
   };
 
-  const postDataHandler = async (data: InputDataInterface) => {
+  const postDataHandler = async (inputData: InputDataInterface) => {
     try {
       dataContext.isSearchingHandlerPG(true);
 
-      const searchDataResponse: {
+      const requestPG: {
+        ok: boolean;
         status: number;
         statusText: string;
-        data: {
-          noParams?: string;
-          error?: any;
-          lastRequestLevel: {
-            lastRequestLevelDebiturUtama: string;
-            lastRequestLevelPasangan: string;
-          };
-          personalInfo: PersonalInfoPGInterface;
-          screeningResults: GradingResultPGInterface;
-          slikResponseLog: SLIKRequestAttemptPGnterface[];
-          spouseInfo: MaritalStatusAndSpousePGInterface;
-        };
-      } = await axios.post("/api/search-data-pg", data);
+        json: () => Promise<any>;
+      } = await fetch("/api/search-data-pg", {
+        body: JSON.stringify(inputData),
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
 
-      if (searchDataResponse.data.noParams) {
+      const responsePG: {
+        noParams?: string;
+        message?: string;
+        lastRequestLevel: {
+          lastRequestLevelDebiturUtama: string;
+          lastRequestLevelPasangan: string;
+        };
+        personalInfo: PersonalInfoPGInterface;
+        spouseInfo: MaritalStatusAndSpousePGInterface;
+        slikResponseLog: SLIKRequestAttemptPGnterface[];
+        screeningResults: GradingResultPGInterface;
+      } = await requestPG.json();
+
+      console.log(responsePG);
+
+      if (responsePG.noParams) {
         dataContext.searchStatusHandlerPG(false);
-        dataContext.searchParametersPGHandler([searchDataResponse.data]);
+        dataContext.searchParametersPGHandler([responsePG]);
       } else if (
-        searchDataResponse.status === 200 &&
-        searchDataResponse.statusText === "OK" &&
-        searchDataResponse.data.personalInfo !== undefined &&
-        !searchDataResponse.data.error
+        requestPG.status !== 200 ||
+        responsePG.message?.includes("not complete") ||
+        !requestPG.ok
+      ) {
+        dataContext.searchStatusHandlerPG(false);
+        setErrorMessage(responsePG.message);
+      } else if (
+        requestPG.status === 200 &&
+        requestPG.ok &&
+        requestPG.statusText === "OK" &&
+        responsePG.personalInfo
       ) {
         dataContext.searchStatusHandlerPG(true);
         dataContext.resultDataPGHandler({
-          ...searchDataResponse.data,
+          ...responsePG,
           form: "PG",
         });
-      } else {
-        dataContext.searchStatusHandlerPG(false);
-        setErrorMessage("Data in PostgreSQL is not complete.");
       }
 
       dataContext.isSearchingHandlerPG(false);
       setButtonDisabled(undefined);
     } catch (error: any) {
       console.error(error);
+      setErrorMessage(error.toString());
       dataContext.searchStatusHandlerPG(false);
       dataContext.isSearchingHandlerPG(false);
-      setErrorMessage(error.response.data.message);
       setButtonDisabled(undefined);
     }
   };

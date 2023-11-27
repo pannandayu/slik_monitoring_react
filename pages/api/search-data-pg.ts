@@ -13,10 +13,8 @@ export default async function handler(
     const data = await request.json();
     res.status(200).json(data);
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: `Data in PostgreSQL DB is not found.`,
-      });
+    res.status(500).json({
+      message: `Data in PostgreSQL DB is not found.`,
+    });
   }
 }

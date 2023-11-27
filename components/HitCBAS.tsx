@@ -53,44 +53,61 @@ const HitCBAS: React.FC<{
     setSearchingCbas(true);
     console.log("Requesting to CBAS now!");
 
-    let cbasPersonalResponse;
-    let cbasSpouseResponse;
-    let cbasAggregateResponse;
-
     let appIdPersonal = requestId + "101";
     let appIdSpouse = requestId + "102";
+    try {
+      if (maritalStatus === "01") {
+        const cbasPersonalRequest = await fetch("/api/hit-cbas", {
+          body: JSON.stringify({ appId: appIdPersonal, type: "category" }),
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        });
+        const cbasPersonalResponse = await cbasPersonalRequest.json();
 
-    if (maritalStatus === "01") {
-      cbasPersonalResponse = await axios.post("/api/hit-cbas", {
-        appId: appIdPersonal,
-        type: "category",
-      });
-      cbasSpouseResponse = await axios.post("/api/hit-cbas", {
-        appId: appIdSpouse,
-        type: "category",
-      });
-      cbasAggregateResponse = await axios.post("/api/hit-cbas", {
-        requestId,
-        type: "agregat_ind",
-      });
-      setCbasDataPersonal(cbasPersonalResponse.data);
-      setCbasDataSpouse(cbasSpouseResponse.data);
-      setCbasDataAggregate(cbasAggregateResponse.data);
-    } else {
-      cbasPersonalResponse = await axios.post("/api/hit-cbas", {
-        appId: appIdPersonal,
-        type: "category",
-      });
-      cbasAggregateResponse = await axios.post("/api/hit-cbas", {
-        requestId,
-        type: "agregat_ind",
-      });
-      setCbasDataPersonal(cbasPersonalResponse.data);
-      setCbasDataAggregate(cbasAggregateResponse.data);
+        const cbasSpouseRequest = await fetch("/api/hit-cbas", {
+          body: JSON.stringify({ appId: appIdSpouse, type: "category" }),
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        });
+        const cbasSpouseResponse = await cbasSpouseRequest.json();
+
+        const cbasAggregateRequest = await fetch("/api/hit-cbas", {
+          body: JSON.stringify({ requestId, type: "agregat_ind" }),
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        });
+        const cbasAggregateResponse = await cbasAggregateRequest.json();
+
+        setCbasDataPersonal(cbasPersonalResponse);
+        setCbasDataSpouse(cbasSpouseResponse);
+        setCbasDataAggregate(cbasAggregateResponse);
+      } else {
+        const cbasPersonalRequest = await fetch("/api/hit-cbas", {
+          body: JSON.stringify({ appId: appIdPersonal, type: "category" }),
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        });
+        const cbasPersonalResponseNotMarried = await cbasPersonalRequest.json();
+
+        const cbasAggregateRequest = await fetch("/api/hit-cbas", {
+          body: JSON.stringify({ requestId, type: "agregat_ind" }),
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        });
+        const cbasAggregateResponseNotMarried =
+          await cbasAggregateRequest.json();
+
+        setCbasDataPersonal(cbasPersonalResponseNotMarried);
+        setCbasDataAggregate(cbasAggregateResponseNotMarried);
+      }
+
+      setSearchingCbas(false);
+      setHitCbas(false);
+    } catch (error: any) {
+      console.log(error);
+      setSearchingCbas(false);
+      setHitCbas(false);
     }
-
-    setSearchingCbas(false);
-    setHitCbas(false);
   };
 
   const personalResponseBox = (
