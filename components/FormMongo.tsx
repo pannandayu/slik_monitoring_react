@@ -7,7 +7,7 @@ import React, { useContext, useRef, useState } from "react";
 import InputDataMongoSchema from "@/validations/InputDataMongoSchema";
 import { ZodIssue } from "zod";
 import DataContext from "@/context/data-context";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import SearchStatus from "./SearchStatus";
 
 const FormMongo: React.FC<{ switchHandler: (state: boolean) => void }> = ({
@@ -63,12 +63,9 @@ const FormMongo: React.FC<{ switchHandler: (state: boolean) => void }> = ({
 
   const postDataHandler = async (data: { application_id: string }) => {
     try {
-      const testApi = await axios.get(
-        "https://jsonplaceholder.typicode.com/posts"
-      );
-      console.log(testApi);
+      const testApi: AxiosResponse = await axios.get("/api/tes");
+      console.log(testApi.data);
       const resultMongo = await axios.post("/api/search-data-mongo", data);
-
 
       dataContext.isSearchingHandlerMongo(true);
 
