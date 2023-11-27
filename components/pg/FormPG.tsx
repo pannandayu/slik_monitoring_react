@@ -13,6 +13,7 @@ import PersonalInfoPGInterface from "@/interfaces/pg/PersonalInfoPGInterface";
 import GradingResultPGInterface from "@/interfaces/pg/GradingResultPGInterface";
 import SLIKRequestAttemptPGnterface from "@/interfaces/pg/SLIKRequestAttemptPGInterface";
 import MaritalStatusAndSpousePGInterface from "@/interfaces/pg/MaritalStatusAndSpousePGInterface";
+import axios from "axios";
 
 const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
   switchHandler,
@@ -101,6 +102,9 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
     try {
       dataContext.isSearchingHandlerPG(true);
 
+      const tes = await axios.get("/api/tes");
+      console.log(tes.data);
+
       const requestPG: {
         ok: boolean;
         status: number;
@@ -131,8 +135,8 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
         dataContext.searchStatusHandlerPG(false);
         dataContext.searchParametersPGHandler([responsePG]);
       } else if (
+        responsePG.message ||
         requestPG.status !== 200 ||
-        responsePG.message?.includes("not complete") ||
         !requestPG.ok
       ) {
         dataContext.searchStatusHandlerPG(false);
