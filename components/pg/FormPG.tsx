@@ -102,15 +102,6 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
     try {
       dataContext.isSearchingHandlerPG(true);
 
-      const tes = await axios.get("/api/tes");
-      const tes2 = await fetch("/api/tes2", {
-        body: JSON.stringify({ tes: "testes" }),
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-      });
-      const res = await tes2.json();
-      console.log(res);
-
       const requestPG: {
         ok: boolean;
         status: number;
