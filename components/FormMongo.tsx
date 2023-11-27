@@ -61,20 +61,26 @@ const FormMongo: React.FC<{ switchHandler: (state: boolean) => void }> = ({
     }
   };
 
-  const postDataHandler = async (data: { application_id: string }) => {
+  const postDataHandler = async (inputData: { application_id: string }) => {
     try {
-      const testApi = await fetch("/api/tes");
-      console.log(testApi);
-      const resultMongo = await axios.post("/api/search-data-mongo", data);
+      const requestMongo = await fetch("/api/search-data-mongo", {
+        body: JSON.stringify(inputData),
+        headers: {
+          "Content-Type": "application-json",
+        },
+        method: "POST",
+      });
+
+      const resultMongo = await requestMongo.json();
+      console.log(resultMongo);
 
       dataContext.isSearchingHandlerMongo(true);
 
-      console.log(resultMongo);
 
-      if (resultMongo.data) {
+      if (resultMongo) {
         dataContext.searchStatusHandlerMongo(true);
         dataContext.resultDataMongoHandler({
-          ...resultMongo.data,
+          ...resultMongo,
           form: "Mongo",
         });
       } else {
@@ -85,7 +91,7 @@ const FormMongo: React.FC<{ switchHandler: (state: boolean) => void }> = ({
       setButtonDisabled(undefined);
     } catch (error: any) {
       console.error(error);
-      setErrorMessage(error.response.data.message + " using MongoDB Ref");
+      setErrorMessage(error.toString());
       dataContext.searchParametersMongoHandler([{}]);
       dataContext.searchStatusHandlerMongo(null);
       dataContext.isSearchingHandlerMongo(null);
