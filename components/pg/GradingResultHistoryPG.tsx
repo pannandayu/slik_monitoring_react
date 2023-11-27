@@ -42,10 +42,10 @@ const GradingResultHistoryPG: React.FC<{
       <table className={styles.table}>
         <thead>
           <tr>
-            <th></th>
-            <th>Debitur Utama</th>
-            <th>Pasangan</th>
-            <th>Agregat</th>
+            <th>Screening</th>
+            <th>Personal</th>
+            <th>Spouse</th>
+            <th>Aggregate</th>
           </tr>
         </thead>
         <tbody>

@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import Title from "@/components/Title";
 import FormSwitch from "@/wrappers/FormSwitch";
 import DashboardSwitch from "@/wrappers/DashboardSwitch";
@@ -11,7 +11,7 @@ export default function Home() {
   };
 
   return (
-    <Fragment>
+    <div>
       <h1>Find your client here.</h1>
       <h2>You can search by...</h2>
       <Title form={formIsPG ? "PG" : "Mongo"} />
@@ -22,6 +22,6 @@ export default function Home() {
         />
         <DashboardSwitch formIsPG={formIsPG} />
       </div>
-    </Fragment>
+    </div>
   );
 }

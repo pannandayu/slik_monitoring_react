@@ -10,7 +10,6 @@ import { ZodIssue } from "zod";
 import Card from "@/wrappers/Card";
 import DataContext from "@/context/data-context";
 import SearchStatus from "../SearchStatus";
-import AllPGDataInterface from "@/interfaces/pg/AllPGDataInterface";
 import PersonalInfoPGInterface from "@/interfaces/pg/PersonalInfoPGInterface";
 import GradingResultPGInterface from "@/interfaces/pg/GradingResultPGInterface";
 import SLIKRequestAttemptPGnterface from "@/interfaces/pg/SLIKRequestAttemptPGInterface";
