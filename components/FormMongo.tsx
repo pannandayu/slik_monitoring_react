@@ -63,8 +63,8 @@ const FormMongo: React.FC<{ switchHandler: (state: boolean) => void }> = ({
 
   const postDataHandler = async (data: { application_id: string }) => {
     try {
-      const testApi: AxiosResponse = await axios.get("/api/tes");
-      console.log(testApi.data);
+      const testApi = await fetch("/api/tes");
+      console.log(testApi);
       const resultMongo = await axios.post("/api/search-data-mongo", data);
 
       dataContext.isSearchingHandlerMongo(true);
@@ -75,7 +75,7 @@ const FormMongo: React.FC<{ switchHandler: (state: boolean) => void }> = ({
         dataContext.searchStatusHandlerMongo(true);
         dataContext.resultDataMongoHandler({
           ...resultMongo.data,
-          form: "MONGO",
+          form: "Mongo",
         });
       } else {
         dataContext.searchStatusHandlerMongo(false);
