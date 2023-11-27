@@ -13,7 +13,6 @@ import PersonalInfoPGInterface from "@/interfaces/pg/PersonalInfoPGInterface";
 import GradingResultPGInterface from "@/interfaces/pg/GradingResultPGInterface";
 import SLIKRequestAttemptPGnterface from "@/interfaces/pg/SLIKRequestAttemptPGInterface";
 import MaritalStatusAndSpousePGInterface from "@/interfaces/pg/MaritalStatusAndSpousePGInterface";
-import axios from "axios";
 
 const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
   switchHandler,
@@ -102,8 +101,9 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
     try {
       dataContext.isSearchingHandlerPG(true);
 
-      const tes = await axios.get("/api/tes");
-      console.log(tes.data);
+      const tes = await fetch("/api/tes");
+      const res = await tes.json();
+      console.log(res);
 
       const requestPG: {
         ok: boolean;
