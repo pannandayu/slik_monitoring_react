@@ -12,7 +12,7 @@ export default async function handler(
 
     const db = client.db("muf_aprw");
     const collection = db.collection("credit_approvals");
-    const matcher = req.body;
+    const matcher = { application_id: req.body.application_id };
 
     const result = await collection.findOne(matcher);
     res.status(200).json(result);
