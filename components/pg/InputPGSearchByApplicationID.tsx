@@ -39,7 +39,7 @@ const InputPGSearchByApplicationID: React.FC<{
     dataContext.isSearchingHandlerPG(null);
 
     const validation = ApplicationIDSchema.safeParse({
-      application_id: applicationIDRef.current?.value,
+      application_id: applicationIDRef.current?.value.trim() || "",
     });
 
     if (validation.success) {
