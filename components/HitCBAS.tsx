@@ -50,7 +50,7 @@ const HitCBAS: React.FC<{
     setHitCbas(true);
     setHitButtonText(1);
     setSearchingCbas(true);
-    console.log("Requesting to CBAS now!");
+    console.log("Requesting to CBAS now");
 
     let appIdPersonal = requestId + "101";
     let appIdSpouse = requestId + "102";
