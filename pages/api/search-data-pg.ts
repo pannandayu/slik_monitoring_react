@@ -1,3 +1,7 @@
+import GradingResultPGInterface from "@/interfaces/pg/GradingResultPGInterface";
+import SLIKRequestAttemptPGnterface from "@/interfaces/pg/SLIKRequestAttemptPGInterface";
+import MaritalStatusAndSpousePGInterface from "@/interfaces/pg/MaritalStatusAndSpousePGInterface";
+import PersonalInfoPGInterface from "@/interfaces/pg/PersonalInfoPGInterface";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -5,16 +9,27 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    const request = await fetch(`${process.env.JAVA_URL}`, {
+    const request: {
+      status: number;
+      ok: boolean;
+      json: () => Promise<any>;
+    } = await fetch(`${process.env.JAVA_URL}`, {
       body: JSON.stringify(req.body),
       method: req.method,
       headers: { "Content-Type": "application/json" },
     });
-    const data = await request.json();
-    res.status(200).json(data);
+
+    const data: {
+      errorMessage?: string;
+    } = await request.json();
+
+    if ((request.status !== 200 || !request.ok) && data.errorMessage) {
+      res.status(400).json({ message: data.errorMessage });
+    } else {
+      res.status(200).json(data);
+    }
+
   } catch (error) {
-    res.status(500).json({
-      message: `Data in PostgreSQL DB is not found.`,
-    });
+    res.status(500).json({ message: "Error while searching in PostgreSQL DB" });
   }
 }

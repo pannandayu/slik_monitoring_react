@@ -114,8 +114,8 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
       });
 
       const responsePG: {
-        noParams?: string;
-        message?: string;
+        noParams: string;
+        message: string;
         lastRequestLevel: {
           lastRequestLevelDebiturUtama: string;
           lastRequestLevelPasangan: string;
@@ -126,23 +126,25 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
         screeningResults: GradingResultPGInterface;
       } = await requestPG.json();
 
-      console.log(responsePG);
-
       if (responsePG.noParams) {
         dataContext.searchStatusHandlerPG(false);
         dataContext.searchParametersPGHandler([responsePG]);
       } else if (
         responsePG.message ||
         requestPG.status !== 200 ||
-        !requestPG.ok
+        requestPG.statusText !== "OK"
       ) {
         dataContext.searchStatusHandlerPG(false);
         setErrorMessage(responsePG.message);
       } else if (
-        requestPG.status === 200 &&
-        requestPG.ok &&
-        requestPG.statusText === "OK" &&
-        responsePG.personalInfo
+        responsePG.lastRequestLevel.lastRequestLevelDebiturUtama !== "" &&
+        responsePG.lastRequestLevel.lastRequestLevelPasangan !== "" &&
+        Object.keys(responsePG.personalInfo).length > 0 &&
+        Object.keys(responsePG.screeningResults.resultGradingScreening1)
+          .length > 0 &&
+        responsePG.screeningResults.resultGradingScreening2.length > 0 &&
+        responsePG.screeningResults.resultGradingScreening3.length > 0 &&
+        responsePG.slikResponseLog.length > 0
       ) {
         dataContext.searchStatusHandlerPG(true);
         dataContext.resultDataPGHandler({
