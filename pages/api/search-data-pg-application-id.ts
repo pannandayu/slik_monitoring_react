@@ -9,7 +9,7 @@ export default async function handler(
       status: number;
       ok: boolean;
       json: () => Promise<any>;
-    } = await fetch(`${process.env.JAVA_URL}`, {
+    } = await fetch(`${process.env.JAVA_URL_APPLICATION_ID}`, {
       body: JSON.stringify(req.body),
       method: req.method,
       headers: { "Content-Type": "application/json" },
@@ -25,6 +25,6 @@ export default async function handler(
       res.status(200).json(data);
     }
   } catch (error) {
-    res.status(500).json({ message: "Error in api/search-data-pg" });
+    res.status(500).json({ message: "Error in api/search-data-pg-application-id" });
   }
 }

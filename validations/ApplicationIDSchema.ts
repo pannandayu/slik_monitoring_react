@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const InputDataMongoSchema = z.object({
+const ApplicationIDSchema = z.object({
   application_id: z.string().refine(
     (string) => {
       return string.length === 14;
@@ -12,4 +12,4 @@ const InputDataMongoSchema = z.object({
   ),
 });
 
-export default InputDataMongoSchema;
+export default ApplicationIDSchema;

@@ -55,6 +55,13 @@ const GradingResultHistoryPG: React.FC<{
               whileHover={{ scale: 1.1, cursor: "pointer" }}
               whileTap={{ scale: 0.9 }}
               onClick={popupScreening1Handler}
+              style={{
+                color: `${
+                  gradingScreening1.flag_result_grading === "0"
+                    ? "#E55B07"
+                    : "black"
+                }`,
+              }}
             >
               {gradingScreening1?.result_grading || "NULL"}
               {openPopupScreening1 ? (
@@ -149,6 +156,11 @@ const GradingResultHistoryPG: React.FC<{
                     whileHover={{ scale: 1.1, cursor: "pointer" }}
                     whileTap={{ scale: 0.9 }}
                     onClick={() => popupScreening3Handler(index)}
+                    style={{
+                      color: `${
+                        item.flag_result_grading === "0" ? "#E55B07" : "black"
+                      }`,
+                    }}
                   >
                     {item?.result_grading
                       ? item.result_grading

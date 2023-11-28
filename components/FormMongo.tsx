@@ -4,7 +4,7 @@ import styles from "@/styles/Form.module.css";
 import inputStyles from "@/styles/Input.module.css";
 import Input from "./Input";
 import React, { useContext, useRef, useState } from "react";
-import InputDataMongoSchema from "@/validations/InputDataMongoSchema";
+import ApplicationIDSchema from "@/validations/ApplicationIDSchema";
 import { ZodIssue } from "zod";
 import DataContext from "@/context/data-context";
 import SearchStatus from "./SearchStatus";
@@ -38,7 +38,7 @@ const FormMongo: React.FC<{ switchHandler: (state: boolean) => void }> = ({
       application_id: applicationIdRef.current?.value,
     };
 
-    const validation = InputDataMongoSchema.safeParse(inputData);
+    const validation = ApplicationIDSchema.safeParse(inputData);
 
     if (validation.success) {
       console.log("Data is valid ==>", validation.data);

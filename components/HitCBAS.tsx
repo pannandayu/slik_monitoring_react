@@ -1,6 +1,5 @@
 import styles from "@/styles/DataBox.module.css";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import CBASGradingPersonalAndSpouseInterface from "@/interfaces/CBASGradingPersonalAndSpouseInterface";
 import CardDataBox from "@/wrappers/CardDataBox";
@@ -104,7 +103,7 @@ const HitCBAS: React.FC<{
       setSearchingCbas(false);
       setHitCbas(false);
     } catch (error: any) {
-      console.log(error);
+      console.error(error);
       setSearchingCbas(false);
       setHitCbas(false);
     }

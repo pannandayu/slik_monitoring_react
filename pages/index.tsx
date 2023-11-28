@@ -35,7 +35,7 @@ export default function Home(props: { password: string }) {
     >
       <form onSubmit={authHandler}>
         <Input
-          labelName="Whisper me the magic words"
+          labelName="Whisper me the magic word"
           idForName="auth"
           type="password"
           className={styles.input}

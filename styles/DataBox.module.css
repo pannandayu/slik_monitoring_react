@@ -72,7 +72,7 @@
 }
 
 .popup {
-  position:fixed;
+  position: fixed;
   bottom: 100%;
   left: 0;
   background-color: #ffffff;
@@ -80,6 +80,7 @@
   border-radius: 10px;
   padding: 10px;
   z-index: 1;
+  color: black;
 }
 
 .hit-cbas-button {
@@ -91,5 +92,5 @@
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin: 0
+  margin: 0;
 }

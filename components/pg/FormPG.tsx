@@ -13,7 +13,7 @@ import PersonalInfoPGInterface from "@/interfaces/pg/PersonalInfoPGInterface";
 import GradingResultPGInterface from "@/interfaces/pg/GradingResultPGInterface";
 import SLIKRequestAttemptPGnterface from "@/interfaces/pg/SLIKRequestAttemptPGInterface";
 import MaritalStatusAndSpousePGInterface from "@/interfaces/pg/MaritalStatusAndSpousePGInterface";
-import axios from "axios";
+import InputPGSearchByApplicationID from "./InputPGSearchByApplicationID";
 
 const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
   switchHandler,
@@ -36,6 +36,9 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
     undefined
   );
 
+  const [buttonSearchByApplicationID, setButtonSearchByApplicationID] =
+    useState<boolean>(false);
+
   const dataContext = useContext(DataContext);
 
   const errorClassName = `${inputStyles.input} ${inputStyles["input-error"]}`;
@@ -49,31 +52,12 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
     dataContext.searchStatusHandlerPG(null);
     dataContext.isSearchingHandlerPG(null);
 
-    const orderId = orderIdRef.current?.value.trim();
-    const appId = appIdRef.current?.value.trim();
-    const namaDebitur = namaDebiturRef.current?.value.trim();
-    const noKtp = noKtpRef.current?.value.trim();
-
-    const inputData: InputDataInterface = {
-      application_no: orderId,
-      app_id: appId,
-      nama_nasabah: namaDebitur,
-      no_ktp: noKtp,
-    };
+    const inputData = getInputData();
 
     const validation = InputDataPGSchema.safeParse(inputData);
+    const searchParameters = getSearchParameters(inputData);
 
-    let paramListBuffer = [];
-    for (const key in inputData) {
-      if (inputData[key as keyof InputDataInterface] !== "") {
-        let param = {
-          [key]: inputData[key as keyof InputDataInterface],
-        };
-        paramListBuffer.push(param);
-      }
-    }
-
-    dataContext.searchParametersPGHandler(paramListBuffer);
+    dataContext.searchParametersPGHandler(searchParameters);
 
     if (validation.success) {
       console.log("Data is valid ==>", validation.data);
@@ -98,9 +82,43 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
     }
   };
 
-  const postDataHandler = async (inputData: InputDataInterface) => {
+  const getSearchParameters: (
+    arg0: InputDataInterface
+  ) => { [x: string]: string | undefined }[] = (
+    inputData: InputDataInterface
+  ) => {
+    let paramListBuffer = [];
+    for (const key in inputData) {
+      if (inputData[key as keyof InputDataInterface] !== "") {
+        let param = {
+          [key]: inputData[key as keyof InputDataInterface],
+        };
+        paramListBuffer.push(param);
+      }
+    }
+    return paramListBuffer;
+  };
+
+  const getInputData: () => InputDataInterface = () => {
+    const orderId = orderIdRef.current?.value.trim() || "";
+    const appId = appIdRef.current?.value.trim() || "";
+    const namaDebitur = namaDebiturRef.current?.value.trim() || "";
+    const noKtp = noKtpRef.current?.value.trim() || "";
+
+    return {
+      application_no: orderId,
+      app_id: appId,
+      nama_nasabah: namaDebitur,
+      no_ktp: noKtp,
+    };
+  };
+
+  const postDataHandler: (arg0: InputDataInterface) => void = async (
+    inputData: InputDataInterface
+  ) => {
     try {
       dataContext.isSearchingHandlerPG(true);
+      setErrorMessage(undefined);
 
       const requestPG: {
         ok: boolean;
@@ -136,16 +154,7 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
       ) {
         dataContext.searchStatusHandlerPG(false);
         setErrorMessage(responsePG.message);
-      } else if (
-        responsePG.lastRequestLevel.lastRequestLevelDebiturUtama !== "" &&
-        responsePG.lastRequestLevel.lastRequestLevelPasangan !== "" &&
-        Object.keys(responsePG.personalInfo).length > 0 &&
-        Object.keys(responsePG.screeningResults.resultGradingScreening1)
-          .length > 0 &&
-        responsePG.screeningResults.resultGradingScreening2.length > 0 &&
-        responsePG.screeningResults.resultGradingScreening3.length > 0 &&
-        responsePG.slikResponseLog.length > 0
-      ) {
+      } else {
         dataContext.searchStatusHandlerPG(true);
         dataContext.resultDataPGHandler({
           ...responsePG,
@@ -249,6 +258,20 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
           Switch
         </motion.button>
       </form>
+
+      <div
+        onClick={() =>
+          setButtonSearchByApplicationID((prevState) => !prevState)
+        }
+        style={{ cursor: "pointer" }}
+      >
+        <hr style={{ marginTop: "20px" }} />
+        <h5>Or give me the Application ID.</h5>
+      </div>
+      {buttonSearchByApplicationID && (
+        <InputPGSearchByApplicationID onPostData={postDataHandler} />
+      )}
+
       {dataContext.isSearchingPG === false && (
         <SearchStatus
           searchParams={dataContext.searchParametersPG}
