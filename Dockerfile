@@ -5,10 +5,13 @@ WORKDIR /usr/src/app
 
 # Install app dependencies
 COPY package*.json ./
-RUN npm install npm@7.24.0
+RUN npm install
 
 # Bundle app source
 COPY . .
+
+# Build the Next.js app
+# RUN npm run build
 
 # Set permissions
 RUN chgrp -R 0 /usr/src/app && \
