@@ -10,9 +10,6 @@ RUN npm install npm@7.24.0
 # Bundle app source
 COPY . .
 
-# Build the Next.js app
-RUN npm run build
-
 # Set permissions
 RUN chgrp -R 0 /usr/src/app && \
     chmod -R g=u /usr/src/app
@@ -21,4 +18,4 @@ RUN chgrp -R 0 /usr/src/app && \
 EXPOSE 3000
 
 # Build and start the application
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev"]
