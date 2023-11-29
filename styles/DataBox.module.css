@@ -30,6 +30,7 @@
 
 .last-request {
   display: flex;
+  gap: 2rem;
 }
 
 .last-request h3 {
