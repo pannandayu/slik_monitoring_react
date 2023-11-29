@@ -54,6 +54,8 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
 
     const inputData = getInputData();
 
+    console.log(inputData);
+
     const validation = InputDataPGSchema.safeParse(inputData);
     const searchParameters = getSearchParameters(inputData);
 

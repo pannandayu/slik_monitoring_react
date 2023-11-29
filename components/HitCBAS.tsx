@@ -235,7 +235,7 @@ const HitCBAS: React.FC<{
       {!searchingCbas && cbasDataPersonal.responseCode !== "" ? (
         cbasDataPersonal.responseCode === "1" ? (
           maritalStatus === "01" ? (
-            <div style={{ display: "flex", gap: "100px" }}>
+            <div style={{ display: "flex", gap: "3.5rem" }}>
               {personalResponseBox}
               {cbasDataSpouse.responseCode === "1" ? (
                 spouseResponseBox
