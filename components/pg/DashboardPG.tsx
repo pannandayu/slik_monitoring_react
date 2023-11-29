@@ -10,18 +10,10 @@ import SLIKRequestAttemptPG from "./SLIKRequestAttempt";
 import GradingResultHistoryPG from "./GradingResultHistoryPG";
 import GradingResultPGInterface from "@/interfaces/pg/GradingResultPGInterface";
 import HitCBAS from "../HitCBAS";
+import AllPGDataInterface from "@/interfaces/pg/AllPGDataInterface";
 
 const DashboardPG: React.FC<{
-  data: {
-    lastRequestLevel: {
-      lastRequestLevelDebiturUtama: string;
-      lastRequestLevelPasangan: string;
-    };
-    personalInfo: PersonalInfoPGInterface;
-    spouseInfo: MaritalStatusAndSpousePGInterface;
-    slikResponseLog: SLIKRequestAttemptPGnterface[];
-    screeningResults: GradingResultPGInterface;
-  };
+  data: AllPGDataInterface;
 }> = ({ data }) => {
   const [key, setKey] = useState<number>(0);
 
