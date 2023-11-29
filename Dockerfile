@@ -1,5 +1,5 @@
 # install node from docker
-FROM node:19-alpine
+FROM node:18-slim
 
 COPY package*.json ./
 
