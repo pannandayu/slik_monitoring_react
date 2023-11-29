@@ -16,8 +16,6 @@ COPY . .
 
 RUN npm run build
 
-COPY .next ./.next
-
 RUN chgrp -R 0 /usr/src/app && \
     chmod -R g=u /usr/src/app
 
