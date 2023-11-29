@@ -20,17 +20,17 @@ const GradingResultHistoryPG: React.FC<{
     new Array(gradingScreening3.length).fill(false)
   );
 
-  const popupScreening1Handler: React.MouseEventHandler = () => {
+  const popupScreening1Handler: React.MouseEventHandler = (): void => {
     setOpenPopupScreening1((prevState) => !prevState);
   };
 
-  const popupScreening2Handler = (index: number) => {
+  const popupScreening2Handler = (index: number): void => {
     const updatedPopupState = [...openPopupScreening2];
     updatedPopupState[index] = !updatedPopupState[index];
     setOpenPopupScreening2(updatedPopupState);
   };
 
-  const popupScreening3Handler = (index: number) => {
+  const popupScreening3Handler = (index: number): void => {
     const updatedPopupState = [...openPopupScreening3];
     updatedPopupState[index] = !updatedPopupState[index];
     setOpenPopupScreening3(updatedPopupState);

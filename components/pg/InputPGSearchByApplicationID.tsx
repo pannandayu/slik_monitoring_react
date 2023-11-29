@@ -59,7 +59,7 @@ const InputPGSearchByApplicationID: React.FC<{
     }
   };
 
-  const searchRefData = async (data: { application_id: string }) => {
+  const searchRefData = async (data: { application_id: string }): Promise<void> => {
     try {
       dataContext.isSearchingHandlerPG(true);
 

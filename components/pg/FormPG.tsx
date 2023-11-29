@@ -82,11 +82,9 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
     }
   };
 
-  const getSearchParameters: (
-    arg0: InputDataInterface
-  ) => { [x: string]: string | undefined }[] = (
+  const getSearchParameters = (
     inputData: InputDataInterface
-  ) => {
+  ): { [key: string]: string | undefined }[] => {
     let paramListBuffer = [];
     for (const key in inputData) {
       if (inputData[key as keyof InputDataInterface] !== "") {
@@ -99,7 +97,7 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
     return paramListBuffer;
   };
 
-  const getInputData: () => InputDataInterface = () => {
+  const getInputData = (): InputDataInterface => {
     const orderId = orderIdRef.current?.value.trim() || "";
     const appId = appIdRef.current?.value.trim() || "";
     const namaDebitur = namaDebiturRef.current?.value.trim() || "";
@@ -113,9 +111,9 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
     };
   };
 
-  const postDataHandler: (arg0: InputDataInterface) => void = async (
+  const postDataHandler = async (
     inputData: InputDataInterface
-  ) => {
+  ): Promise<void> => {
     try {
       dataContext.isSearchingHandlerPG(true);
       setErrorMessage(undefined);
