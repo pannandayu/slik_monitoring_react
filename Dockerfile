@@ -8,9 +8,9 @@ RUN npm install --unsafe-perm=true --allow-root
 
 COPY . .
 
-RUN chown -R 1001:0 /usr/src/app && \
+RUN chgrp -R 0 /usr/src/app && \
     chmod -R g=u /usr/src/app
 
-USER 1001
+EXPOSE 3000
 
 CMD ["npm", "run", "dev"]
