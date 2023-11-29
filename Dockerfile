@@ -1,4 +1,4 @@
-FROM svr-ocp-nex-d01.muf.co.id:5000/base-img/nodejs:16.13.0
+FROM node:18
 
 WORKDIR /usr/src/app
 COPY package*.json ./
