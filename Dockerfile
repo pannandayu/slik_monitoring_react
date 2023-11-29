@@ -4,13 +4,13 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN mkdir /.npm && chown -R 1003030000:0 /.npm
-USER 1003030000
-
-RUN npm install
+RUN npm install --unsafe-perm=true --allow-root
 
 COPY . .
 
-EXPOSE 3000
+RUN chown -R 1001:0 /usr/src/app && \
+    chmod -R g=u /usr/src/app
+
+USER 1001
 
 CMD ["npm", "run", "dev"]
