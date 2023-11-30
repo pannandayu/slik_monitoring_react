@@ -18,5 +18,4 @@ RUN chgrp -R 0 /usr/src/app && \
 # tell which port this image is using
 EXPOSE 3000
 
-CMD [ "npm", "install"]
-CMD [ "npm", "start"]
+CMD ["sh", "-c", "npm run build && npm start"]
