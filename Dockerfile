@@ -14,7 +14,7 @@ COPY . .
 
 RUN chgrp -R 0 /usr/src/app && \
     chmod -R g=u /usr/src/app && \
-    chown -R ./
+    chown -R 1003030000:0 ./npm
 
 # tell which port this image is using
 EXPOSE 3000
