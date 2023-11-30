@@ -262,9 +262,12 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
           setButtonSearchByApplicationID((prevState) => !prevState)
         }
         style={{ cursor: "pointer" }}
+        className={styles["title-application-id"]}
       >
         <hr style={{ marginTop: "20px" }} />
-        <h5>Or give me the Application ID.</h5>
+        <h5>
+          Or give me the <span>Application ID.</span>
+        </h5>
       </div>
       {buttonSearchByApplicationID && (
         <InputPGSearchByApplicationID

@@ -11,7 +11,7 @@
 }
 
 .switch-button-mongo {
-  background-color: #65A657;
+  background-color: #65a657;
   color: #fff;
   padding: 10px 20px;
   font-size: 16px;
@@ -53,4 +53,10 @@
   font-size: 0.75rem;
   margin-top: 0;
   word-spacing: 0;
+}
+
+.title-application-id h5 span:hover {
+  color: #2e8fdf;
+  font-size: 1rem;
+  transition: 0.2s;
 }
