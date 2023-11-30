@@ -175,7 +175,7 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
     <Card>
       <form className={styles.form} onSubmit={submitHandler}>
         <Input
-          labelName="No. Aplikasi / Order ID"
+          labelName="No. Aplikasi / Order ID :"
           idForName="application-no"
           type="text"
           className={
@@ -192,7 +192,7 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
         }
 
         <Input
-          labelName="App ID"
+          labelName="App ID :"
           idForName="app-id"
           type="text"
           className={
@@ -205,7 +205,7 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
         {<p>{errorObject?.errorMessage.filter((e) => e.includes("App ID"))}</p>}
 
         <Input
-          labelName="Nama Nasabah"
+          labelName="Nama Nasabah :"
           idForName="nama-nasabah"
           type="text"
           className={
@@ -218,7 +218,7 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
         {<p>{errorObject?.errorMessage.filter((e) => e.includes("Kindly"))}</p>}
 
         <Input
-          labelName="No. KTP"
+          labelName="No. KTP :"
           idForName="no-ktp"
           type="text"
           className={
