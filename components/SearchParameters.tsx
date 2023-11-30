@@ -29,7 +29,7 @@ const SearchParameters: React.FC<{ form: string }> = ({ form }) => {
             Please wait. Now searching...
           </motion.h2>
           <h4>
-            <b>Parameters:</b>
+            <b>Parameter(s):</b>
           </h4>
           {searchParameters &&
             searchParameters.map((item, index) => {

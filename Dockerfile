@@ -1,16 +1,16 @@
 # install node from docker
 FROM node:18-slim
 
-COPY package*.json ./
-
 # change the directory
 WORKDIR /app
 
-# copy all files (local) to docker directory (/app)
-COPY . .
+COPY package*.json ./
 
 # will download the dependencies inside the container --> creates node_modules
 RUN npm install
+
+# copy all files (local) to docker directory (/app)
+COPY . .
 
 # tell which port this image is using
 EXPOSE 3000

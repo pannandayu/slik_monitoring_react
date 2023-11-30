@@ -10,7 +10,7 @@ const Input = React.forwardRef<HTMLInputElement, InputTagInterface>(
     return (
       <Fragment>
         <label className={styles.label} htmlFor={labelName}>
-          {labelName} :
+          {labelName}
         </label>
         <input
           className={className}
