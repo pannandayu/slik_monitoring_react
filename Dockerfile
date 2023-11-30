@@ -13,7 +13,8 @@ RUN npm install
 COPY . .
 
 RUN chgrp -R 0 /usr/src/app && \
-    chmod -R g=u /usr/src/app
+    chmod -R g=u /usr/src/app && \
+    chown -R ./
 
 # tell which port this image is using
 EXPOSE 3000
