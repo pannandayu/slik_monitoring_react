@@ -16,6 +16,7 @@ const HitCBAS: React.FC<{
   const [cbasDataPersonal, setCbasDataPersonal] =
     useState<CBASGradingPersonalAndSpouseInterface>({
       responseCode: "",
+      responseDesc: "",
       content: {
         nikDebitur: "",
         namaDebitur: "",
@@ -28,6 +29,7 @@ const HitCBAS: React.FC<{
   const [cbasDataSpouse, setCbasDataSpouse] =
     useState<CBASGradingPersonalAndSpouseInterface>({
       responseCode: "",
+      responseDesc: "",
       content: {
         nikDebitur: "",
         namaDebitur: "",
@@ -40,6 +42,7 @@ const HitCBAS: React.FC<{
   const [cbasDataAggregate, setCbasDataAggregate] =
     useState<CBASGradingAggregateInterface>({
       responseCode: "",
+      responseDesc: "",
       contentDebitur: {
         kategoriAgregat: "",
         color: "",
@@ -116,20 +119,20 @@ const HitCBAS: React.FC<{
           <h2 style={{ marginTop: "1rem", color: "#CA5305" }}>
             Personal Response
           </h2>
-          <h4>Name: {cbasDataPersonal.content.namaDebitur}</h4>
+          <h4>Name: {cbasDataPersonal.content?.namaDebitur}</h4>
           <h4>
-            Request Date: {cbasDataPersonal.content.tanggalPermintaan || "-"}
+            Request Date: {cbasDataPersonal.content?.tanggalPermintaan || "-"}
           </h4>
           <h4>
             Category:{" "}
             <span
               style={{
-                backgroundColor: `${cbasDataPersonal.content.color}`,
+                backgroundColor: `${cbasDataPersonal.content?.color}`,
                 padding: "0.5rem",
                 borderRadius: "10px",
               }}
             >
-              {cbasDataPersonal.content.kategoriDebitur}
+              {cbasDataPersonal.content?.kategoriDebitur}
             </span>
           </h4>
         </div>
@@ -143,20 +146,20 @@ const HitCBAS: React.FC<{
           <h2 style={{ marginTop: "1rem", color: "#CA5305" }}>
             Spouse Response
           </h2>
-          <h4>Name: {cbasDataSpouse.content.namaDebitur}</h4>
+          <h4>Name: {cbasDataSpouse.content?.namaDebitur}</h4>
           <h4>
-            Request Date: {cbasDataSpouse.content.tanggalPermintaan || "-"}
+            Request Date: {cbasDataSpouse.content?.tanggalPermintaan || "-"}
           </h4>
           <h4>
             Category:{" "}
             <span
               style={{
-                backgroundColor: `${cbasDataSpouse.content.color}`,
+                backgroundColor: `${cbasDataSpouse.content?.color}`,
                 padding: "0.5rem",
                 borderRadius: "10px",
               }}
             >
-              {cbasDataSpouse.content.kategoriDebitur}
+              {cbasDataSpouse.content?.kategoriDebitur}
             </span>
           </h4>
         </div>
@@ -174,12 +177,12 @@ const HitCBAS: React.FC<{
             Category:{" "}
             <span
               style={{
-                backgroundColor: `${cbasDataAggregate.contentDebitur.color}`,
+                backgroundColor: `${cbasDataAggregate.contentDebitur?.color}`,
                 padding: "0.5rem",
                 borderRadius: "10px",
               }}
             >
-              {cbasDataAggregate.contentDebitur.kategoriAgregat}
+              {cbasDataAggregate.contentDebitur?.kategoriAgregat}
             </span>
           </h4>
         </div>
@@ -233,11 +236,13 @@ const HitCBAS: React.FC<{
       )}
 
       {!searchingCbas && cbasDataPersonal.responseCode !== "" ? (
-        cbasDataPersonal.responseCode === "1" ? (
+        cbasDataPersonal.responseCode === "1" &&
+        cbasDataPersonal.responseDesc.endsWith("success") ? (
           maritalStatus === "01" ? (
             <div style={{ display: "flex", gap: "3.5rem" }}>
               {personalResponseBox}
-              {cbasDataSpouse.responseCode === "1" ? (
+              {cbasDataSpouse.responseCode === "1" &&
+              cbasDataSpouse.responseDesc.endsWith("success") ? (
                 spouseResponseBox
               ) : (
                 <div className={styles.frame}>
@@ -246,7 +251,8 @@ const HitCBAS: React.FC<{
                   </div>
                 </div>
               )}
-              {cbasDataAggregate.responseCode === "1" ? (
+              {cbasDataAggregate.responseCode === "1" &&
+              cbasDataAggregate.responseDesc.endsWith("success") ? (
                 aggregateResponseBox
               ) : (
                 <div className={styles.frame}>
@@ -259,7 +265,8 @@ const HitCBAS: React.FC<{
           ) : (
             <div style={{ display: "flex", gap: "100px" }}>
               {personalResponseBox}
-              {cbasDataAggregate.responseCode === "1" ? (
+              {cbasDataAggregate.responseCode === "1" &&
+              cbasDataAggregate.responseDesc.endsWith("success") ? (
                 aggregateResponseBox
               ) : (
                 <div className={styles.frame}>

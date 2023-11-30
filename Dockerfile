@@ -1,8 +1,8 @@
 # install node from docker
-FROM node:18-slim
+FROM svr-ocp-nex-d01.muf.co.id:5000/base-img/nodejs:18.17.0
 
 # change the directory
-WORKDIR /app
+WORKDIR /usr/src/app
 
 COPY package*.json ./
 
@@ -12,7 +12,10 @@ RUN npm install
 # copy all files (local) to docker directory (/app)
 COPY . .
 
+RUN chgrp -R 0 /usr/src/app && \
+    chmod -R g=u /usr/src/app
+
 # tell which port this image is using
 EXPOSE 3000
 
-CMD ["sh", "-c", "npm run build && npm start"]
+CMD ["npm", "run", "build && npm start"]
