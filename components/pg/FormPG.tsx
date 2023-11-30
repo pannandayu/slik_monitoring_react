@@ -267,7 +267,10 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
         <h5>Or give me the Application ID.</h5>
       </div>
       {buttonSearchByApplicationID && (
-        <InputPGSearchByApplicationID onPostData={postDataHandler} />
+        <InputPGSearchByApplicationID
+          onPostData={postDataHandler}
+          onResetErrorSearchStatus={setErrorMessage}
+        />
       )}
 
       {dataContext.isSearchingPG === false && (
