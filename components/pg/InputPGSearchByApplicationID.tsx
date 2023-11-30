@@ -1,4 +1,11 @@
-import { FormEvent, useContext, useRef, useState } from "react";
+import {
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  useContext,
+  useRef,
+  useState,
+} from "react";
 import Input from "../Input";
 import inputStyles from "@/styles/Input.module.css";
 import styles from "@/styles/Form.module.css";
@@ -10,7 +17,8 @@ import InputDataInterface from "@/interfaces/InputDataInterface";
 
 const InputPGSearchByApplicationID: React.FC<{
   onPostData: (data: InputDataInterface) => void;
-}> = ({ onPostData }) => {
+  onResetErrorSearchStatus: Dispatch<SetStateAction<string | undefined>>;
+}> = ({ onPostData, onResetErrorSearchStatus }) => {
   const applicationIDRef = useRef<HTMLInputElement>(null);
 
   const [buttonDisabled, setButtonDisabled] = useState<boolean | undefined>(
@@ -32,6 +40,7 @@ const InputPGSearchByApplicationID: React.FC<{
     event: FormEvent
   ) => {
     event.preventDefault();
+    onResetErrorSearchStatus(undefined);
 
     setButtonDisabled(true);
     dataContext.searchParametersPGHandler([{}]);
@@ -59,7 +68,9 @@ const InputPGSearchByApplicationID: React.FC<{
     }
   };
 
-  const searchRefData = async (data: { application_id: string }): Promise<void> => {
+  const searchRefData = async (data: {
+    application_id: string;
+  }): Promise<void> => {
     try {
       dataContext.isSearchingHandlerPG(true);
 
@@ -86,7 +97,7 @@ const InputPGSearchByApplicationID: React.FC<{
         requestRef.status !== 200 ||
         requestRef.statusText !== "OK"
       ) {
-        throw Error(responseRef.message);
+        throw new Error(responseRef.message);
       } else {
         onPostData({
           application_no: responseRef.application_no,
