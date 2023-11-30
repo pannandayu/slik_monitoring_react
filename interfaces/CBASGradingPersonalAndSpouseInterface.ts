@@ -1,6 +1,7 @@
 interface CBASGradingPersonalAndSpouse {
   responseCode: string;
-  content: {
+  responseDesc: string;
+  content?: {
     nikDebitur: string;
     namaDebitur: string;
     tanggalPermintaan: string;

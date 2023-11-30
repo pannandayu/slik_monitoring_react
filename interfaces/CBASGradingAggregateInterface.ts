@@ -1,6 +1,7 @@
 interface CBASGradingAggregateInterface {
   responseCode: string;
-  contentDebitur: {
+  responseDesc: string;
+  contentDebitur?: {
     kategoriAgregat: string;
     color: string;
   };
