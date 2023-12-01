@@ -4,6 +4,8 @@ FROM svr-ocp-nex-d01.muf.co.id:5000/base-img/nodejs:18.17.0
 # change the directory
 WORKDIR /usr/src/app
 
+RUN chmod -R 755 /usr/src/app
+
 COPY package*.json ./
 
 # will download the dependencies inside the container --> creates node_modules
