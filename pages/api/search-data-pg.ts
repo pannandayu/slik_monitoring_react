@@ -25,11 +25,8 @@ export default async function handler(
       res.status(200).json(data);
     }
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message:
-          "Error while searching data in PostgreSQL DB, make sure you are connected to the VPN and try again.",
-      });
+    res.status(500).json({
+      message: "Error in Search API PostgreSQL DB, please try again later.",
+    });
   }
 }

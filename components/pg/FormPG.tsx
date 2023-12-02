@@ -123,7 +123,7 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
         status: number;
         statusText: string;
         json: () => Promise<any>;
-      } = await fetch("/api/search-data-pg", {
+      } = await fetch("/api/ ", {
         body: JSON.stringify(inputData),
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -164,7 +164,7 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
       setButtonDisabled(undefined);
     } catch (error: any) {
       console.error(error);
-      setErrorMessage(error.toString());
+      setErrorMessage(error.message + " data. Make sure you are connected to the VPN.");
       dataContext.searchStatusHandlerPG(false);
       dataContext.isSearchingHandlerPG(false);
       setButtonDisabled(undefined);

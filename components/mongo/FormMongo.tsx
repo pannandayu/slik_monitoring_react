@@ -90,7 +90,8 @@ const FormMongo: React.FC<{ switchHandler: (state: boolean) => void }> = ({
       } = await requestMongo.json();
 
       if (requestMongo.status === 500) {
-        throw new Error(resultMongo.errorMessage);
+        dataContext.searchStatusHandlerMongo(false);
+        setErrorMessage(resultMongo.errorMessage);
       } else if (requestMongo.status === 400) {
         dataContext.searchStatusHandlerMongo(false);
         setErrorMessage(resultMongo.notFound);
@@ -106,7 +107,9 @@ const FormMongo: React.FC<{ switchHandler: (state: boolean) => void }> = ({
       setButtonDisabled(undefined);
     } catch (error: any) {
       console.error(error);
-      setErrorMessage(error.message);
+      setErrorMessage(
+        error.message + " data. Make sure you are connected to the VPN."
+      );
       dataContext.searchStatusHandlerMongo(null);
       dataContext.isSearchingHandlerMongo(null);
       setButtonDisabled(undefined);
