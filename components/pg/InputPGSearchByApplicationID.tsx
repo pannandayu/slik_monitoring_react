@@ -119,11 +119,11 @@ const InputPGSearchByApplicationID: React.FC<{
   return (
     <AnimatePresence mode="wait">
       <motion.form
-        key={"searchByApplicationID-" + Math.random().toFixed(2).toString()}
+        key={"searchByApplicationID"}
         onSubmit={applicationIDSubmitHandler}
         initial={{ y: -20 }}
         animate={{ y: 0 }}
-        exit={{ y: -20 }}
+        // exit={{ y: -20 }}
         transition={{ duration: 0.2 }}
         className={styles.form}
         style={{

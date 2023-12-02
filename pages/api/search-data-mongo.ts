@@ -25,7 +25,7 @@ export default async function handler(
     }
   } catch (error) {
     res.status(500).json({
-      errorMessage: "Error in api/search-data-mongo, please try to re-search.",
+      errorMessage: "Error while searching data in MongoDB, make sure you are connected to the VPN and try again.",
     });
   } finally {
     client?.close();

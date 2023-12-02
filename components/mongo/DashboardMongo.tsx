@@ -64,11 +64,8 @@ const DashboardMongo: React.FC<{ data: MongoDataClass }> = ({ data }) => {
           <h1>Created @ {mongoData.order_created_date}</h1>
         </div>
         <hr />
-
         <HeaderMongo headerData={mongoData} />
-
         <SubmitterMongo submitterData={mongoData} />
-
         <AboutClientMongo
           mongoData={mongoData}
           mongoPersonal={mongoPersonal}
@@ -76,9 +73,7 @@ const DashboardMongo: React.FC<{ data: MongoDataClass }> = ({ data }) => {
           personalAge={personalAge}
           spouseAge={spouseAge}
         />
-
         <ScoringMongo mongoData={mongoData} mongoPersonal={mongoPersonal} />
-
         <ApplicationStatus mongoData={mongoData} />
       </div>
     </motion.div>

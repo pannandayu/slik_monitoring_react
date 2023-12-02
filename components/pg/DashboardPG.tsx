@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import styles from "@/styles/DataBox.module.css";
 import SLIKRequestAttemptPG from "./SLIKRequestAttempt";
@@ -38,7 +38,7 @@ const DashboardPG: React.FC<{
   const [gradingResultHistoryPG, setGradingResultHistoryPG] =
     useState<GradingResultPGClass>(new GradingResultPGClass());
 
-  console.log(spouseInfoPG?.jenis_kelamin);
+  // const [requestId, setRequestId] = useState<string>("");
 
   useEffect(() => {
     setPersonalInfoPG({

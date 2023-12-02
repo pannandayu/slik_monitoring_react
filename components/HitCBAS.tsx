@@ -1,9 +1,10 @@
 import styles from "@/styles/DataBox.module.css";
-import React, { Fragment, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import CBASGradingPersonalAndSpouseInterface from "@/interfaces/CBASGradingPersonalAndSpouseInterface";
 import CardDataBox from "@/wrappers/CardDataBox";
-import CBASGradingAggregateInterface from "@/interfaces/CBASGradingAggregateInterface";
+import CBASPersonalInfo from "@/classes/cbas/CBASPersonalInfo";
+import CBASSpouseInfo from "@/classes/cbas/CBASSpouseInfo";
+import CBASAggregateInfo from "@/classes/cbas/CBASAggregateInfo";
 
 const HitCBAS: React.FC<{
   requestId: string;
@@ -11,43 +12,23 @@ const HitCBAS: React.FC<{
 }> = ({ requestId, maritalStatus }) => {
   const [hitCbas, setHitCbas] = useState<boolean>(false);
   const [hitButtonText, setHitButtonText] = useState<number>(0);
-
   const [searchingCbas, setSearchingCbas] = useState<boolean>(false);
-  const [cbasDataPersonal, setCbasDataPersonal] =
-    useState<CBASGradingPersonalAndSpouseInterface>({
-      responseCode: "",
-      responseDesc: "",
-      content: {
-        nikDebitur: "",
-        namaDebitur: "",
-        tanggalPermintaan: "",
-        kategoriDebitur: "",
-        color: "",
-      },
-    });
+  const [cbasDataPersonal, setCbasDataPersonal] = useState<CBASPersonalInfo>(
+    new CBASPersonalInfo()
+  );
+  const [cbasDataSpouse, setCbasDataSpouse] = useState<CBASSpouseInfo>(
+    new CBASSpouseInfo()
+  );
+  const [cbasDataAggregate, setCbasDataAggregate] = useState<CBASAggregateInfo>(
+    new CBASAggregateInfo()
+  );
 
-  const [cbasDataSpouse, setCbasDataSpouse] =
-    useState<CBASGradingPersonalAndSpouseInterface>({
-      responseCode: "",
-      responseDesc: "",
-      content: {
-        nikDebitur: "",
-        namaDebitur: "",
-        tanggalPermintaan: "",
-        kategoriDebitur: "",
-        color: "",
-      },
-    });
-
-  const [cbasDataAggregate, setCbasDataAggregate] =
-    useState<CBASGradingAggregateInterface>({
-      responseCode: "",
-      responseDesc: "",
-      contentDebitur: {
-        kategoriAgregat: "",
-        color: "",
-      },
-    });
+  useEffect(() => {
+    setCbasDataPersonal(new CBASPersonalInfo());
+    setCbasDataSpouse(new CBASSpouseInfo());
+    setCbasDataAggregate(new CBASAggregateInfo());
+    setHitButtonText(0);
+  }, [requestId, maritalStatus]);
 
   const postCbasHandler = async () => {
     setHitCbas(true);
@@ -220,7 +201,8 @@ const HitCBAS: React.FC<{
         <AnimatePresence mode="wait">
           <motion.div
             key={
-              cbasDataPersonal.content?.nikDebitur || Math.random().toFixed(2).toString()
+              cbasDataPersonal.content?.nikDebitur ||
+              Math.random().toFixed(2).toString()
             }
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
