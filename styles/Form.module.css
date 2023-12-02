@@ -56,7 +56,8 @@
 }
 
 .title-application-id h5 span:hover {
+  cursor: pointer;
   color: #2e8fdf;
   font-size: 1rem;
-  transition: 0.2s;
+  transition: 0.2s ease-out;
 }

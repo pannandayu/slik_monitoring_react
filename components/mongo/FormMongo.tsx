@@ -2,12 +2,13 @@ import Card from "@/wrappers/Card";
 import { motion } from "framer-motion";
 import styles from "@/styles/Form.module.css";
 import inputStyles from "@/styles/Input.module.css";
-import Input from "./Input";
+import Input from "../Input";
 import React, { useContext, useRef, useState } from "react";
 import ApplicationIDSchema from "@/validations/ApplicationIDSchema";
 import { ZodIssue } from "zod";
 import DataContext from "@/context/data-context";
-import SearchStatus from "./SearchStatus";
+import SearchStatus from "../SearchStatus";
+import MongoDataClass from "@/classes/mongo/MongoDataClass";
 
 const FormMongo: React.FC<{ switchHandler: (state: boolean) => void }> = ({
   switchHandler,
@@ -34,8 +35,13 @@ const FormMongo: React.FC<{ switchHandler: (state: boolean) => void }> = ({
   const submitHandler: React.FormEventHandler = (event: React.FormEvent) => {
     event.preventDefault();
 
+    setErrorMessage(undefined);
+    dataContext.searchParametersMongoHandler([{}]);
+    dataContext.searchStatusHandlerMongo(null);
+    dataContext.isSearchingHandlerMongo(null);
+
     const inputData = {
-      application_id: applicationIdRef.current?.value,
+      application_id: applicationIdRef.current?.value.trim() || "",
     };
 
     const validation = ApplicationIDSchema.safeParse(inputData);
@@ -43,11 +49,8 @@ const FormMongo: React.FC<{ switchHandler: (state: boolean) => void }> = ({
     if (validation.success) {
       console.log("Data is valid ==>", validation.data);
       console.log("Sending your request!");
-      setErrorMessage(undefined);
-      dataContext.searchParametersMongoHandler([{}]);
-      dataContext.searchStatusHandlerMongo(null);
-      dataContext.isSearchingHandlerMongo(null);
-      dataContext.searchParametersMongoHandler([inputData]);
+
+      dataContext.searchParametersMongoHandler([validation.data]);
 
       postDataHandler(validation.data);
 
@@ -66,9 +69,9 @@ const FormMongo: React.FC<{ switchHandler: (state: boolean) => void }> = ({
   };
 
   const postDataHandler = async (inputData: { application_id: string }) => {
-    dataContext.isSearchingHandlerMongo(true);
-
     try {
+      dataContext.isSearchingHandlerMongo(true);
+
       const requestMongo: {
         ok: boolean;
         status: number;
@@ -80,26 +83,30 @@ const FormMongo: React.FC<{ switchHandler: (state: boolean) => void }> = ({
         headers: { "Content-Type": "application/json" },
       });
 
-      const resultMongo = await requestMongo.json();
+      const resultMongo: {
+        notFound?: string;
+        errorMessage?: string;
+        data?: MongoDataClass;
+      } = await requestMongo.json();
 
-      dataContext.isSearchingHandlerMongo(true);
-
-      if (resultMongo) {
+      if (requestMongo.status === 500) {
+        throw new Error(resultMongo.errorMessage);
+      } else if (requestMongo.status === 400) {
+        dataContext.searchStatusHandlerMongo(false);
+        setErrorMessage(resultMongo.notFound);
+      } else {
         dataContext.searchStatusHandlerMongo(true);
         dataContext.resultDataMongoHandler({
-          ...resultMongo,
+          ...(resultMongo.data as MongoDataClass),
           form: "Mongo",
         });
-      } else {
-        dataContext.searchStatusHandlerMongo(false);
-        setErrorMessage("Data not found in Mongo DB");
       }
 
       dataContext.isSearchingHandlerMongo(false);
       setButtonDisabled(undefined);
     } catch (error: any) {
       console.error(error);
-      setErrorMessage(error.toString());
+      setErrorMessage(error.message);
       dataContext.searchStatusHandlerMongo(null);
       dataContext.isSearchingHandlerMongo(null);
       setButtonDisabled(undefined);
@@ -110,7 +117,7 @@ const FormMongo: React.FC<{ switchHandler: (state: boolean) => void }> = ({
     <Card>
       <form className={styles.form} onSubmit={submitHandler}>
         <Input
-          labelName="Application ID"
+          labelName="Application ID :"
           idForName="application-id"
           type="text"
           className={

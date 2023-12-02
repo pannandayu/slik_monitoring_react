@@ -1,3 +1,4 @@
+import MongoData from "@/classes/mongo/MongoDataClass";
 import InputDataInterface from "@/interfaces/InputDataInterface";
 import AllPGDataInterface from "@/interfaces/pg/AllPGDataInterface";
 import React, { ReactNode, useState } from "react";
@@ -14,7 +15,7 @@ interface DataContextInterface {
 
   resultDataPG: AllPGDataInterface | null;
 
-  resultDataMongo: {} | null;
+  resultDataMongo: MongoData | null;
 
   searchStatusHandlerPG: (state: boolean | null) => void;
   searchStatusHandlerMongo: (state: boolean | null) => void;
@@ -26,7 +27,7 @@ interface DataContextInterface {
   searchParametersMongoHandler: (data: [{}]) => void;
 
   resultDataPGHandler: (data: AllPGDataInterface) => void;
-  resultDataMongoHandler: (data: {}) => void;
+  resultDataMongoHandler: (data: MongoData) => void;
 }
 
 const DataContext = React.createContext<DataContextInterface>({
@@ -41,7 +42,7 @@ const DataContext = React.createContext<DataContextInterface>({
 
   resultDataPG: null,
 
-  resultDataMongo: {},
+  resultDataMongo: null,
 
   searchStatusHandlerPG: () => {},
   searchStatusHandlerMongo: () => {},
@@ -83,7 +84,9 @@ export const DataContextProvider: React.FC<{ children?: ReactNode }> = ({
     null
   );
 
-  const [resultDataMongo, setResultDataMongo] = useState<{} | null>(null);
+  const [resultDataMongo, setResultDataMongo] = useState<MongoData | null>(
+    null
+  );
 
   const searchStatusHandlerPG = (state: boolean | null) => {
     setSearchStatusPG(state);
@@ -111,7 +114,7 @@ export const DataContextProvider: React.FC<{ children?: ReactNode }> = ({
     setResultDataPG(data);
   };
 
-  const resultDataMongoHandler = (data: {}) => {
+  const resultDataMongoHandler = (data: MongoData) => {
     setResultDataMongo(data);
   };
 

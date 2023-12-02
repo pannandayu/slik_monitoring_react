@@ -1,11 +1,11 @@
-import GradingResultPGInterface from "@/interfaces/pg/GradingResultPGInterface";
+import GradingResultPGClass from "@/classes/pg/GradingResultPGClass";
 import styles from "@/styles/DataBox.module.css";
 
 import { motion } from "framer-motion";
 import { Fragment, useState } from "react";
 
 const GradingResultHistoryPG: React.FC<{
-  data: GradingResultPGInterface;
+  data: GradingResultPGClass;
 }> = ({ data }) => {
   const gradingScreening1 = data.resultGradingScreening1;
   const gradingScreening2 = data.resultGradingScreening2;
@@ -66,7 +66,10 @@ const GradingResultHistoryPG: React.FC<{
               {gradingScreening1?.result_grading || "NULL"}
               {openPopupScreening1 ? (
                 <motion.div
-                  key={"gradingSc1"}
+                  key={
+                    gradingScreening1.updated_date?.toString() ||
+                    Math.random().toFixed(2).toString()
+                  }
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ duration: 0.15 }}
@@ -115,7 +118,10 @@ const GradingResultHistoryPG: React.FC<{
                       : "NULL"}
                     {openPopupScreening2[index] ? (
                       <motion.div
-                        key={"gradingSc2"}
+                        key={
+                          gradingScreening2[0].updated_date?.toString() ||
+                          Math.random().toFixed(2).toString()
+                        }
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         transition={{ duration: 0.15 }}
@@ -169,7 +175,10 @@ const GradingResultHistoryPG: React.FC<{
                       : "NULL"}
                     {openPopupScreening3[index] ? (
                       <motion.div
-                        key={"gradingSc3"}
+                        key={
+                          gradingScreening3[0].updated_date?.toString() ||
+                          Math.random().toFixed(2).toString()
+                        }
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         transition={{ duration: 0.15 }}

@@ -1,9 +1,9 @@
-import SLIKRequestAttemptPGnterface from "@/interfaces/pg/SLIKRequestAttemptPGInterface";
+import SLIKRequestAttemptPGClass from "@/classes/pg/SLIKRequestAttemptPGClass";
 import styles from "@/styles/DataBox.module.css";
 import { Fragment } from "react";
 
 const SLIKRequestAttemptPG: React.FC<{
-  data: SLIKRequestAttemptPGnterface[];
+  data: SLIKRequestAttemptPGClass[];
 }> = ({ data }) => {
   const latestRequest = data.slice(0, 1);
   const olderRequests = data.slice(1);

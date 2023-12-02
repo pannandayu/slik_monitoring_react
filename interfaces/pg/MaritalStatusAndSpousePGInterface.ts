@@ -1,10 +1,10 @@
 interface MaritalStatusAndSpousePGInterface {
   maritalStatus: string | null;
-  nama_pasangan?: string | null;
-  no_ktp?: string | null;
-  jenis_kelamin?: string | null;
-  lastRequestLevelPasangan?: string | null;
-  tanggal_lahir?: string | null;
+  nama_pasangan?: string;
+  no_ktp?: string;
+  jenis_kelamin?: string;
+  lastRequestLevelPasangan?: string;
+  tanggal_lahir?: string;
 }
 
 export default MaritalStatusAndSpousePGInterface;

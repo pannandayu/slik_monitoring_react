@@ -1,5 +1,5 @@
 import styles from "@/styles/DataBox.module.css";
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import CBASGradingPersonalAndSpouseInterface from "@/interfaces/CBASGradingPersonalAndSpouseInterface";
 import CardDataBox from "@/wrappers/CardDataBox";
@@ -219,7 +219,9 @@ const HitCBAS: React.FC<{
       {searchingCbas && (
         <AnimatePresence mode="wait">
           <motion.div
-            key={"cbasData"}
+            key={
+              cbasDataPersonal.content?.nikDebitur || Math.random().toFixed(2).toString()
+            }
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
@@ -277,10 +279,30 @@ const HitCBAS: React.FC<{
               )}
             </div>
           )
+        ) : cbasDataSpouse.responseCode === "1" &&
+          cbasDataSpouse.responseDesc.endsWith("success") ? (
+          <div style={{ display: "flex", gap: "3.5rem" }}>
+            <div className={styles.frame}>
+              <div>
+                <h2 style={{ color: "red" }}>Personal data not found.</h2>
+              </div>
+            </div>
+            {spouseResponseBox}
+            {cbasDataAggregate.responseCode === "1" &&
+            cbasDataAggregate.responseDesc.endsWith("success") ? (
+              aggregateResponseBox
+            ) : (
+              <div className={styles.frame}>
+                <div>
+                  <h2 style={{ color: "red" }}>Aggregate data not found.</h2>
+                </div>
+              </div>
+            )}
+          </div>
         ) : (
           <div className={styles.frame}>
             <div>
-              <h2 style={{ color: "red" }}>Data not found.</h2>
+              <h2 style={{ color: "red" }}>All data not found.</h2>
             </div>
           </div>
         )

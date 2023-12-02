@@ -55,11 +55,11 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
     const inputData = getInputData();
 
     const validation = InputDataPGSchema.safeParse(inputData);
-    const searchParameters = getSearchParameters(inputData);
-
-    dataContext.searchParametersPGHandler(searchParameters);
 
     if (validation.success) {
+      const searchParameters = getSearchParameters(inputData);
+      dataContext.searchParametersPGHandler(searchParameters);
+
       console.log("Data is valid ==>", validation.data);
       console.log("Sending your request!");
 
@@ -247,7 +247,6 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           type="submit"
-          disabled={buttonDisabled}
           onClick={(event: React.MouseEvent) => {
             event.preventDefault();
             switchHandler(false);
@@ -264,7 +263,6 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
         className={styles["title-application-id"]}
       >
         <hr style={{ marginTop: "20px" }} />
-        <h5>Or give me the Application ID.</h5>
         <h5>
           Or give me the <span>Application ID.</span>
         </h5>
