@@ -123,7 +123,7 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
         status: number;
         statusText: string;
         json: () => Promise<any>;
-      } = await fetch("/api/ ", {
+      } = await fetch("/api/search-data-pg ", {
         body: JSON.stringify(inputData),
         method: "POST",
         headers: { "Content-Type": "application/json" },
