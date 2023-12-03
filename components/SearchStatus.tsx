@@ -38,20 +38,20 @@ const SearchStatus: React.FC<{
       >
         <hr />
         <h2>Status</h2>
-        {!dataFound && searchParams[0].noParams && (
+        {!dataFound && searchParams[0]?.noParams && (
           <Fragment>
             <h3 className={styles["no-params"]}>OOPS!</h3>
             {searchParameters}
           </Fragment>
         )}
-        {dataFound && !searchParams[0].noParams && (
+        {dataFound && !searchParams[0]?.noParams && (
           <Fragment>
             <h3>FOUND</h3>
             <h4>Search Parameter(s)</h4>
             {searchParameters}
           </Fragment>
         )}
-        {!dataFound && !searchParams[0].noParams && (
+        {!dataFound && !searchParams[0]?.noParams && (
           <Fragment>
             <h3 className={styles["not-found"]}>NOT FOUND</h3>
             <h4>Search Parameter(s)</h4>

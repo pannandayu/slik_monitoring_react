@@ -1,9 +1,9 @@
-import SLIKRequestAttemptPGnterface from "@/interfaces/pg/SLIKRequestAttemptPGInterface";
+import SLIKRequestAttemptPGClass from "@/classes/pg/SLIKRequestAttemptPGClass";
 import styles from "@/styles/DataBox.module.css";
 import { Fragment } from "react";
 
 const SLIKRequestAttemptPG: React.FC<{
-  data: SLIKRequestAttemptPGnterface[];
+  data: SLIKRequestAttemptPGClass[];
 }> = ({ data }) => {
   const latestRequest = data.slice(0, 1);
   const olderRequests = data.slice(1);
@@ -16,15 +16,15 @@ const SLIKRequestAttemptPG: React.FC<{
           return (
             <Fragment key={`${item.app_id}-${item.insert_date}`}>
               <h3>CBAS Request ID {item.app_id.split("I")[0] + "I"}</h3>
-              <h3>By: {item.status_applicant}</h3>
               <h3>
                 @{" "}
                 {new Date(item.insert_date).toLocaleDateString() +
                   " - " +
                   new Date(item.insert_date).toLocaleTimeString()}
               </h3>
+              <h3>By: {item.status_applicant}</h3>
+              <h3>Response? {item.response_code === "1" ? "OK" : "NOT OK"}</h3>
               <h3>Refresh? {item.refresh === "1" ? "Yes" : "No"}</h3>
-              <h3>Status? {item.response_code === "1" ? "OK" : "NOT OK"}</h3>
               <h3>
                 Screening{" "}
                 <p style={{ textAlign: "center", marginTop: 0 }}>

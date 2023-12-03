@@ -55,11 +55,11 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
     const inputData = getInputData();
 
     const validation = InputDataPGSchema.safeParse(inputData);
-    const searchParameters = getSearchParameters(inputData);
-
-    dataContext.searchParametersPGHandler(searchParameters);
 
     if (validation.success) {
+      const searchParameters = getSearchParameters(inputData);
+      dataContext.searchParametersPGHandler(searchParameters);
+
       console.log("Data is valid ==>", validation.data);
       console.log("Sending your request!");
 
@@ -164,7 +164,9 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
       setButtonDisabled(undefined);
     } catch (error: any) {
       console.error(error);
-      setErrorMessage(error.toString());
+      setErrorMessage(
+        error.message + " data. Make sure you are connected to the VPN."
+      );
       dataContext.searchStatusHandlerPG(false);
       dataContext.isSearchingHandlerPG(false);
       setButtonDisabled(undefined);
@@ -247,7 +249,6 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           type="submit"
-          disabled={buttonDisabled}
           onClick={(event: React.MouseEvent) => {
             event.preventDefault();
             switchHandler(false);
@@ -261,7 +262,6 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
         onClick={() =>
           setButtonSearchByApplicationID((prevState) => !prevState)
         }
-        style={{ cursor: "pointer" }}
         className={styles["title-application-id"]}
       >
         <hr style={{ marginTop: "20px" }} />

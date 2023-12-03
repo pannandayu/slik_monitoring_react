@@ -9,12 +9,14 @@ import styles from "@/styles/Input.module.css";
 export default function Home(props: { password: string }) {
   const [formIsPG, setFormIsPG] = useState<boolean>(true);
 
-  const [auth, setAuth] = useState<boolean>(false);
+  const [auth, setAuth] = useState<boolean | null>(null);
 
   const authHandler: React.FormEventHandler = (event: FormEvent) => {
     event.preventDefault();
     if (authRef.current?.value === props.password) {
       setAuth(true);
+    } else {
+      setAuth(false);
     }
   };
 
@@ -33,30 +35,45 @@ export default function Home(props: { password: string }) {
         justifyContent: "center",
       }}
     >
-      <form onSubmit={authHandler}>
-        <Input
-          labelName="Whisper me the magic word"
-          idForName="auth"
-          type="password"
-          className={styles.input}
-          ref={authRef}
-        />
-        <motion.button
-          style={{
-            backgroundColor: "#4caf50",
-            color: "white",
-            cursor: "pointer",
-            border: "none",
-            margin: "20px",
-            padding: "10px",
-            borderRadius: "8px",
-          }}
-          whileHover={{ backgroundColor: "#91c493", scale: 1.1 }}
-          whileTap={{ backgroundColor: "#91c493", scale: 0.9 }}
-        >
-          Submit
-        </motion.button>
-      </form>
+      <div style={{ display: "block" }}>
+        <div>
+          <form onSubmit={authHandler}>
+            <Input
+              labelName="Whisper me the magic word"
+              idForName="auth"
+              type="password"
+              className={styles.input}
+              ref={authRef}
+            />
+            <motion.button
+              style={{
+                backgroundColor: "#4caf50",
+                color: "white",
+                cursor: "pointer",
+                border: "none",
+                margin: "20px",
+                padding: "10px",
+                borderRadius: "8px",
+              }}
+              whileHover={{ backgroundColor: "#91c493", scale: 1.1 }}
+              whileTap={{ backgroundColor: "#91c493", scale: 0.9 }}
+            >
+              Submit
+            </motion.button>
+          </form>
+        </div>
+        <div>
+          {auth === false && (
+            <motion.h4
+              initial={{ y: -20 }}
+              animate={{ y: 0 }}
+              style={{ color: "red", margin: 0 }}
+            >
+              Wrong password.
+            </motion.h4>
+          )}
+        </div>
+      </div>
     </div>
   ) : (
     <div>

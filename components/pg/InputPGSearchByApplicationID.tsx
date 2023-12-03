@@ -123,7 +123,7 @@ const InputPGSearchByApplicationID: React.FC<{
         onSubmit={applicationIDSubmitHandler}
         initial={{ y: -20 }}
         animate={{ y: 0 }}
-        exit={{ y: -20 }}
+        // exit={{ y: -20 }}
         transition={{ duration: 0.2 }}
         className={styles.form}
         style={{

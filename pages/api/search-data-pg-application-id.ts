@@ -25,6 +25,8 @@ export default async function handler(
       res.status(200).json(data);
     }
   } catch (error) {
-    res.status(500).json({ message: "Error in api/search-data-pg-application-id" });
+    res.status(500).json({
+      message: "Error in Search API PostgreSQL DB by Application ID, please try again later.",
+    });
   }
 }

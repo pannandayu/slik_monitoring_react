@@ -1,10 +1,8 @@
 import styles from "@/styles/DataBox.module.css";
 import { Fragment } from "react";
-import MaritalStatusAndSpousePGInterface from "@/interfaces/pg/MaritalStatusAndSpousePGInterface";
+import SpouseInfoPGClass from "@/classes/pg/SpouseInfoPGClass";
 
-const SpouseInfoPG: React.FC<{ data: MaritalStatusAndSpousePGInterface }> = ({
-  data,
-}) => {
+const SpouseInfoPG: React.FC<{ data: SpouseInfoPGClass }> = ({ data }) => {
   let age;
   if (data.tanggal_lahir) {
     const birthDate = new Date(data.tanggal_lahir);
@@ -14,7 +12,7 @@ const SpouseInfoPG: React.FC<{ data: MaritalStatusAndSpousePGInterface }> = ({
   return (
     <div className={styles["client-data"]}>
       <h2>Spouse Info</h2>
-      {data?.maritalStatus === "01" ? (
+      {data.maritalStatus === "01" ? (
         <Fragment>
           <div className={styles["info-container"]}>
             <div className={styles["personal-info"]}>

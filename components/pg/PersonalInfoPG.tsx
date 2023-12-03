@@ -1,8 +1,8 @@
-import PersonalInfoPGInterface from "@/interfaces/pg/PersonalInfoPGInterface";
+import PersonalInfoPGClass from "@/classes/pg/PersonalInfoPGClass";
 import styles from "@/styles/DataBox.module.css";
 
 const PersonalInfoPG: React.FC<{
-  data: PersonalInfoPGInterface;
+  data: PersonalInfoPGClass;
 }> = ({ data }) => {
   const birthDate = new Date(data.tanggal_lahir);
   const age = (new Date().getFullYear() - birthDate.getFullYear()).toString();

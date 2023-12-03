@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ReactNode, useContext, useEffect, useState } from "react";
 import styles from "@/styles/Home.module.css";
 import DashboardPG from "../components/pg/DashboardPG";
+import DashboardMongo from "@/components/mongo/DashboardMongo";
 
 const DashboardSwitch: React.FC<{ formIsPG: boolean }> = ({ formIsPG }) => {
   const dataContext = useContext(DataContext);
@@ -63,11 +64,11 @@ const DashboardSwitch: React.FC<{ formIsPG: boolean }> = ({ formIsPG }) => {
             <DashboardPG data={dataPG} />
           </CardDataBox>
         )}
-        {/* {!formIsPG && dataMongo && (
+        {!formIsPG && dataMongo?.form === "Mongo" && dataMongo && (
           <CardDataBox>
-            <DataBox data={dataMongo} />
-          </CardDataBox> TODO BUAT SEARCH BY MONGO
-        )} */}
+            <DashboardMongo data={dataMongo} />
+          </CardDataBox>
+        )}
       </motion.div>
     </AnimatePresence>
   );

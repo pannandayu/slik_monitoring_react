@@ -1,22 +1,20 @@
-import { useEffect, useState } from "react";
-import PersonalInfoPGInterface from "@/interfaces/pg/PersonalInfoPGInterface";
-import MaritalStatusAndSpousePGInterface from "@/interfaces/pg/MaritalStatusAndSpousePGInterface";
-import SLIKRequestAttemptPGnterface from "@/interfaces/pg/SLIKRequestAttemptPGInterface";
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import PersonalInfoPG from "./PersonalInfoPG";
-import SpouseInfoPG from "./SpouseInfoPG";
 import styles from "@/styles/DataBox.module.css";
 import SLIKRequestAttemptPG from "./SLIKRequestAttempt";
 import GradingResultHistoryPG from "./GradingResultHistoryPG";
-import GradingResultPGInterface from "@/interfaces/pg/GradingResultPGInterface";
 import HitCBAS from "../HitCBAS";
 import AllPGDataInterface from "@/interfaces/pg/AllPGDataInterface";
+import PersonalInfoPGClass from "@/classes/pg/PersonalInfoPGClass";
+import SpouseInfoPGClass from "@/classes/pg/SpouseInfoPGClass";
+import PersonalInfoPG from "./PersonalInfoPG";
+import SpouseInfoPG from "./SpouseInfoPG";
+import SLIKRequestAttemptPGClass from "@/classes/pg/SLIKRequestAttemptPGClass";
+import GradingResultPGClass from "@/classes/pg/GradingResultPGClass";
 
 const DashboardPG: React.FC<{
   data: AllPGDataInterface;
 }> = ({ data }) => {
-  const [key, setKey] = useState<number>(0);
-
   const {
     lastRequestLevel,
     personalInfo,
@@ -25,71 +23,24 @@ const DashboardPG: React.FC<{
     screeningResults,
   } = data;
 
-  const [personalInfoPG, setPersonalInfoPG] = useState<PersonalInfoPGInterface>(
-    {
-      nama_nasabah: "",
-      no_ktp: "",
-      app_id: "",
-      request_id: "",
-      application_no: "",
-      jenis_kelamin: "",
-      lastRequestLevelDebiturUtama: "",
-      tanggal_lahir: "",
-    }
+  const [personalInfoPG, setPersonalInfoPG] = useState<PersonalInfoPGClass>(
+    new PersonalInfoPGClass()
   );
 
-  const [spouseInfoPG, setSpouseInfoPG] =
-    useState<MaritalStatusAndSpousePGInterface>({
-      maritalStatus: null,
-      nama_pasangan: null,
-      no_ktp: null,
-      jenis_kelamin: null,
-      lastRequestLevelPasangan: null,
-      tanggal_lahir: null,
-    });
+  const [spouseInfoPG, setSpouseInfoPG] = useState<SpouseInfoPGClass>(
+    new SpouseInfoPGClass()
+  );
 
   const [slikRequestInfoPG, setSlikRequestInfoPG] = useState<
-    SLIKRequestAttemptPGnterface[]
-  >([
-    {
-      app_id: "",
-      application_no: "",
-      insert_date: "",
-      response_code: "",
-      refresh: "",
-      screening: "",
-      status_applicant: "",
-    },
-  ]);
+    SLIKRequestAttemptPGClass[]
+  >([new SLIKRequestAttemptPGClass()]);
 
   const [gradingResultHistoryPG, setGradingResultHistoryPG] =
-    useState<GradingResultPGInterface>({
-      resultGradingScreening1: {
-        param_grading_id: "",
-        result_grading: "",
-        flag_result_grading: "",
-        updated_date: "",
-      },
-      resultGradingScreening2: [
-        {
-          param_grading_id: "",
-          result_grading: "",
-          flag_result_grading: "",
-          updated_date: "",
-        },
-      ],
-      resultGradingScreening3: [
-        {
-          param_grading_id: "",
-          result_grading: "",
-          flag_result_grading: "",
-          updated_date: "",
-        },
-      ],
-    });
+    useState<GradingResultPGClass>(new GradingResultPGClass());
+
+  // const [requestId, setRequestId] = useState<string>("");
 
   useEffect(() => {
-    setKey((prevKey) => prevKey + 1);
     setPersonalInfoPG({
       ...personalInfo,
       lastRequestLevelDebiturUtama:
@@ -105,9 +56,8 @@ const DashboardPG: React.FC<{
 
   return (
     <motion.div
-      key={key}
-      initial={{ opacity: 0, y: -30 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, x: -30 }}
+      animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.3 }}
       className={styles["data-box"]}
     >

@@ -12,7 +12,7 @@
 }
 
 .data-box h2 {
-  font-family: sans-serif;
+  font-family: "Cabin";
 }
 
 .data-box h3,
@@ -44,6 +44,11 @@
 }
 
 .info-container {
+  display: flex;
+  gap: 1rem;
+}
+
+.info-container-mongo {
   display: flex;
   gap: 1rem;
 }
