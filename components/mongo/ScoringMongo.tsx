@@ -1,18 +1,18 @@
 import CardDataBox from "@/wrappers/CardDataBox";
 
 const ScoringMongo: React.FC<{
-  mongoData: {
+  scoringData: {
     scoring: { credit_scoring: string; total_scoring: number };
     scoring_dukcapil: string;
     scoring_dukcapil_pasangan: string;
   };
   mongoPersonal: { debitur_status_perkawinan: string } | undefined;
-}> = ({ mongoData, mongoPersonal }) => {
+}> = ({ scoringData, mongoPersonal }) => {
   const {
     scoring: { credit_scoring, total_scoring },
     scoring_dukcapil,
     scoring_dukcapil_pasangan,
-  } = mongoData;
+  } = scoringData;
 
   const { debitur_status_perkawinan } = mongoPersonal ?? {};
 

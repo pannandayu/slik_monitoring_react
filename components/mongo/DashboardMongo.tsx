@@ -67,14 +67,14 @@ const DashboardMongo: React.FC<{ data: MongoDataClass }> = ({ data }) => {
         <HeaderMongo headerData={mongoData} />
         <SubmitterMongo submitterData={mongoData} />
         <AboutClientMongo
-          mongoData={mongoData}
-          mongoPersonal={mongoPersonal}
-          mongoSpouse={mongoSpouse}
+          gradingData={mongoData}
+          personalData={mongoPersonal}
+          spouseData={mongoSpouse}
           personalAge={personalAge}
           spouseAge={spouseAge}
         />
-        <ScoringMongo mongoData={mongoData} mongoPersonal={mongoPersonal} />
-        <ApplicationStatus mongoData={mongoData} />
+        <ScoringMongo scoringData={mongoData} mongoPersonal={mongoPersonal} />
+        <ApplicationStatus statusData={mongoData} />
       </div>
     </motion.div>
   );

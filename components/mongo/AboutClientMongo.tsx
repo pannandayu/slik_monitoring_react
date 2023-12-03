@@ -2,12 +2,12 @@ import CardDataBox from "@/wrappers/CardDataBox";
 import { Fragment } from "react";
 
 const AboutClientMongo: React.FC<{
-  mongoData: {
+  gradingData: {
     grading_slik: string;
     grading_slik_pasangan: string;
     aggregate_slik_perorangan: string;
   };
-  mongoPersonal:
+  personalData:
     | {
         debitur_nama_sesuai_ktp: string;
         debitur_no_ktp: string;
@@ -15,21 +15,21 @@ const AboutClientMongo: React.FC<{
         debitur_status_perkawinan: string;
       }
     | undefined;
-  mongoSpouse: { spouse_ktp_name: string; spouse_ktp_no: string } | undefined;
+  spouseData: { spouse_ktp_name: string; spouse_ktp_no: string } | undefined;
   personalAge: string | undefined;
   spouseAge: string | undefined;
-}> = ({ mongoData, mongoPersonal, mongoSpouse, personalAge, spouseAge }) => {
+}> = ({ gradingData, personalData, spouseData, personalAge, spouseAge }) => {
   const { grading_slik, grading_slik_pasangan, aggregate_slik_perorangan } =
-    mongoData;
+    gradingData;
 
   const {
     debitur_nama_sesuai_ktp,
     debitur_no_ktp,
     debitur_jenis_kelamin,
     debitur_status_perkawinan,
-  } = mongoPersonal ?? {};
+  } = personalData ?? {};
 
-  const { spouse_ktp_name, spouse_ktp_no } = mongoSpouse ?? {};
+  const { spouse_ktp_name, spouse_ktp_no } = spouseData ?? {};
 
   return (
     <div>
@@ -53,7 +53,7 @@ const AboutClientMongo: React.FC<{
         <CardDataBox>
           <div>
             <h2>Spouse Info</h2>
-            {debitur_status_perkawinan === "01" && mongoSpouse ? (
+            {debitur_status_perkawinan === "01" && spouseData ? (
               <Fragment>
                 <h3>Name: {spouse_ktp_name}</h3>
                 <h3>ID Card No: {spouse_ktp_no}</h3>

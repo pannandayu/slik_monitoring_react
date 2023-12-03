@@ -1,13 +1,13 @@
 const ApplicationStatus: React.FC<{
-  mongoData: {
+  statusData: {
     approval_status: string;
     approval_level: number;
     last_approval_date: string;
     approval_flag: string;
   };
-}> = ({ mongoData }) => {
+}> = ({ statusData }) => {
   const { approval_status, approval_level, last_approval_date, approval_flag } =
-    mongoData;
+    statusData;
   return (
     <div>
       <h2>The status of this application is...</h2>
