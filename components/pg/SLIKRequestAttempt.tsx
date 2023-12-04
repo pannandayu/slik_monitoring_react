@@ -45,7 +45,7 @@ const SLIKRequestAttemptPG: React.FC<{
       </div>
       {olderRequests.length > 0 ? (
         <Fragment>
-          <h2 style={{ marginTop: "0.75rem", marginBottom: "0.75rem" }}>
+          <h2 style={{ marginTop: "0", marginBottom: "0.75rem" }}>
             SLIK Request Attempt(s)
           </h2>
           <table className={styles.table}>

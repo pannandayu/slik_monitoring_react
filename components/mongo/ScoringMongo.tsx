@@ -33,14 +33,14 @@ const ScoringMongo: React.FC<{
         </CardDataBox>
         <CardDataBox>
           <h2>Personal Dukcapil Score</h2>
-          <h3>{scoring_dukcapil}</h3>
+          <h3 style={{ fontSize: "1.5rem" }}>{scoring_dukcapil}</h3>
         </CardDataBox>
         <CardDataBox>
           <h2>Spouse Dukcapil Score</h2>
           {debitur_status_perkawinan === "01" && scoring_dukcapil_pasangan ? (
-            <h3>{scoring_dukcapil_pasangan}</h3>
+            <h3 style={{ fontSize: "1.5rem" }}>{scoring_dukcapil_pasangan}</h3>
           ) : (
-            "NOT MARRIED"
+            <h3 style={{ fontSize: "1.5rem" }}>NOT MARRIED</h3>
           )}
         </CardDataBox>
       </div>

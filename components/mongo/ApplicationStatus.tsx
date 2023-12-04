@@ -15,7 +15,7 @@ const ApplicationStatus: React.FC<{
         {approval_status.startsWith("APPR") ? "Approved" : "Rejected"} on level{" "}
         {approval_level}{" "}
         {last_approval_date
-          ? ` @ ${last_approval_date.replaceAll("-", "/")}`
+          ? `@${last_approval_date.replaceAll("-", "/")}`
           : ""}{" "}
         and{" "}
         {approval_flag === "CLOSED"

@@ -9,6 +9,7 @@ class MongoDataClass implements MongoDataInterface {
   grading_slik: string = "";
   grading_slik_pasangan: string = "";
   aggregate_slik_perorangan: string = "";
+  current_form_desc: string = "";
   approval_level: number = 0;
   approval_flag: string = "";
   approval_status: string = "";
@@ -35,6 +36,7 @@ class MongoDataClass implements MongoDataInterface {
   };
   scoring_dukcapil: string = "";
   scoring_dukcapil_pasangan: string = "";
+  aggregate_slik_perorangan_brms?: string = "";
   last_approval_date?: string = "";
   slik? = {
     idRequestcbas: "",
