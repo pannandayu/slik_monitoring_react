@@ -57,8 +57,6 @@ const DashboardPG: React.FC<{
     setMongoAddsData(mongoAdditionalData);
   }, [data]);
 
-  console.log(data);
-
   return (
     <motion.div
       initial={{ opacity: 0, x: -30 }}

@@ -143,33 +143,6 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
         screeningResults: GradingResultPGInterface;
       } = await requestPG.json();
 
-      const requestMongo: {
-        ok: boolean;
-        status: number;
-        statusText: string;
-        json: () => Promise<any>;
-      } = await fetch("/api/search-data-mongo", {
-        body: JSON.stringify({
-          order_id: inputData.application_no,
-        }),
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-      });
-
-      const responseMongo: {
-        notFound?: string;
-        errorMessage?: string;
-        data?: MongoDataClass;
-      } = await requestMongo.json();
-
-      const mongoAdditionalData = {
-        aggregateBrms:
-          responseMongo.data?.aggregate_slik_perorangan_brms ||
-          "Not yet available.",
-        currentFormDesc:
-          responseMongo.data?.current_form_desc || "Not yet available.",
-      };
-
       if (responsePG.noParams) {
         dataContext.searchStatusHandlerPG(false);
         dataContext.searchParametersPGHandler([responsePG]);
@@ -181,6 +154,33 @@ const FormPG: React.FC<{ switchHandler: (state: boolean) => void }> = ({
         dataContext.searchStatusHandlerPG(false);
         setErrorMessage(responsePG.message);
       } else {
+        const requestMongo: {
+          ok: boolean;
+          status: number;
+          statusText: string;
+          json: () => Promise<any>;
+        } = await fetch("/api/search-data-mongo", {
+          body: JSON.stringify({
+            order_id: responsePG.personalInfo.application_no,
+          }),
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        });
+
+        const responseMongo: {
+          notFound?: string;
+          errorMessage?: string;
+          data?: MongoDataClass;
+        } = await requestMongo.json();
+
+        const mongoAdditionalData = {
+          aggregateBrms:
+            responseMongo.data?.aggregate_slik_perorangan_brms ||
+            "Not yet available.",
+          currentFormDesc:
+            responseMongo.data?.current_form_desc || "Not yet available.",
+        };
+
         dataContext.searchStatusHandlerPG(true);
         dataContext.resultDataPGHandler({
           form: "PG",
