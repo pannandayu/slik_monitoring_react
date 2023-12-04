@@ -96,7 +96,7 @@ const HitCBAS: React.FC<{
   const personalResponseBox = (
     <CardDataBox>
       <div className={styles.frame}>
-        <div>
+        <div className={styles["cbas-response"]}>
           <h2 style={{ marginTop: "1rem", color: "#CA5305" }}>
             Personal Response
           </h2>
@@ -104,17 +104,18 @@ const HitCBAS: React.FC<{
           <h4>
             Request Date: {cbasDataPersonal.content?.tanggalPermintaan || "-"}
           </h4>
-          <h4>
-            Category:{" "}
-            <span
-              style={{
-                backgroundColor: `${cbasDataPersonal.content?.color}`,
-                padding: "0.5rem",
-                borderRadius: "10px",
-              }}
-            >
-              {cbasDataPersonal.content?.kategoriDebitur}
-            </span>
+          <h4>Category:</h4>
+          <h4
+            style={{
+              backgroundColor: `${cbasDataPersonal.content?.color}`,
+              padding: "0.5rem",
+              borderRadius: "10px",
+              textAlign: "center",
+              width: "45%",
+              margin: "0",
+            }}
+          >
+            {cbasDataPersonal.content?.kategoriDebitur}
           </h4>
         </div>
       </div>
@@ -123,7 +124,7 @@ const HitCBAS: React.FC<{
   const spouseResponseBox = (
     <CardDataBox>
       <div className={styles.frame}>
-        <div>
+        <div className={styles["cbas-response"]}>
           <h2 style={{ marginTop: "1rem", color: "#CA5305" }}>
             Spouse Response
           </h2>
@@ -131,17 +132,18 @@ const HitCBAS: React.FC<{
           <h4>
             Request Date: {cbasDataSpouse.content?.tanggalPermintaan || "-"}
           </h4>
-          <h4>
-            Category:{" "}
-            <span
-              style={{
-                backgroundColor: `${cbasDataSpouse.content?.color}`,
-                padding: "0.5rem",
-                borderRadius: "10px",
-              }}
-            >
-              {cbasDataSpouse.content?.kategoriDebitur}
-            </span>
+          <h4>Category:</h4>
+          <h4
+            style={{
+              backgroundColor: `${cbasDataSpouse.content?.color}`,
+              padding: "0.5rem",
+              borderRadius: "10px",
+              textAlign: "center",
+              width: "45%",
+              margin: "0",
+            }}
+          >
+            {cbasDataSpouse.content?.kategoriDebitur}
           </h4>
         </div>
       </div>
@@ -150,21 +152,22 @@ const HitCBAS: React.FC<{
   const aggregateResponseBox = (
     <CardDataBox>
       <div className={styles.frame}>
-        <div>
+        <div className={styles["cbas-response"]}>
           <h2 style={{ marginTop: "1rem", color: "#CA5305" }}>
             Aggregate Response
           </h2>
-          <h4>
-            Category:{" "}
-            <span
-              style={{
-                backgroundColor: `${cbasDataAggregate.contentDebitur?.color}`,
-                padding: "0.5rem",
-                borderRadius: "10px",
-              }}
-            >
-              {cbasDataAggregate.contentDebitur?.kategoriAgregat}
-            </span>
+          <h4>Category:</h4>
+          <h4
+            style={{
+              backgroundColor: `${cbasDataAggregate.contentDebitur?.color}`,
+              padding: "0.5rem",
+              borderRadius: "10px",
+              textAlign: "center",
+              width: "45%",
+              margin: "0",
+            }}
+          >
+            {cbasDataAggregate.contentDebitur?.kategoriAgregat}
           </h4>
         </div>
       </div>

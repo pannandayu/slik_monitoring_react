@@ -26,29 +26,23 @@ const ScoringMongo: React.FC<{
           justifyContent: "space-between",
         }}
       >
-        <div>
-          <CardDataBox>
-            <h2>Credit Score</h2>
-            <h3>{credit_scoring}</h3>
-            <h3>{total_scoring}</h3>
-          </CardDataBox>
-        </div>
-        <div>
-          <CardDataBox>
-            <h2>Personal Dukcapil Score</h2>
-            <h3>{scoring_dukcapil}</h3>
-          </CardDataBox>
-        </div>
-        <div>
-          <CardDataBox>
-            <h2>Spouse Dukcapil Score</h2>
-            {debitur_status_perkawinan === "01" && scoring_dukcapil_pasangan ? (
-              <h3>{scoring_dukcapil_pasangan}</h3>
-            ) : (
-              "NOT MARRIED"
-            )}
-          </CardDataBox>
-        </div>
+        <CardDataBox>
+          <h2>Credit Score</h2>
+          <h3>{credit_scoring}</h3>
+          <h3>{total_scoring}</h3>
+        </CardDataBox>
+        <CardDataBox>
+          <h2>Personal Dukcapil Score</h2>
+          <h3>{scoring_dukcapil}</h3>
+        </CardDataBox>
+        <CardDataBox>
+          <h2>Spouse Dukcapil Score</h2>
+          {debitur_status_perkawinan === "01" && scoring_dukcapil_pasangan ? (
+            <h3>{scoring_dukcapil_pasangan}</h3>
+          ) : (
+            "NOT MARRIED"
+          )}
+        </CardDataBox>
       </div>
     </div>
   );

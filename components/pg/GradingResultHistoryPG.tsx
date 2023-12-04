@@ -38,7 +38,9 @@ const GradingResultHistoryPG: React.FC<{
 
   return (
     <div className={styles["client-data"]}>
-      <h2>Grading Result History / Records</h2>
+      <h2 style={{ marginTop: "0.75rem", marginBottom: "0.75rem" }}>
+        Grading Result History / Records
+      </h2>
       <table className={styles.table}>
         <thead>
           <tr>

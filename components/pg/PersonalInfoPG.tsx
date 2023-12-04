@@ -9,10 +9,12 @@ const PersonalInfoPG: React.FC<{
 
   return (
     <div className={styles["client-data"]}>
-      <h2>Personal Info</h2>
+      <h2 style={{ marginTop: "0.5rem", marginBottom: "0.75rem" }}>
+        Personal Info
+      </h2>
       <div className={styles["info-container"]}>
         <div className={styles["personal-info"]}>
-          <h3>Name: {data.nama_nasabah}</h3>
+          <h3 style={{ marginTop: "0.5rem" }}>Name: {data.nama_nasabah}</h3>
           <h3>ID Card No: {data.no_ktp}</h3>
           <h3>Gender: {data.jenis_kelamin}</h3>
           <h3>Age: {age}</h3>
@@ -21,7 +23,7 @@ const PersonalInfoPG: React.FC<{
           <h3
             style={{
               textAlign: "center",
-              fontSize: "1rem",
+              fontSize: "0.8rem",
             }}
           >
             Last Successful Request At
@@ -29,7 +31,7 @@ const PersonalInfoPG: React.FC<{
           <h3
             style={{
               textAlign: "center",
-              fontSize: "1.75rem",
+              fontSize: "1.5rem",
               margin: "auto",
             }}
           >

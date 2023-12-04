@@ -37,7 +37,7 @@
   margin-top: 0;
   margin-bottom: 0;
   text-align: left;
-  font-size: 1.35rem;
+  font-size: 1.05rem;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
@@ -51,6 +51,10 @@
 .info-container-mongo {
   display: flex;
   gap: 1rem;
+}
+
+.info-container-mongo h2 {
+  font-size: 1.25rem;
 }
 
 .personal-info {
@@ -80,6 +84,10 @@
   background-color: #f2f2f2;
 }
 
+.table td {
+  font-size: 0.85rem;
+}
+ 
 .popup {
   position: fixed;
   bottom: 100%;
@@ -102,4 +110,12 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
   margin: 0;
+}
+
+.cbas-response h2 {
+  font-size: 1.15rem;
+}
+
+.cbas-response h4 {
+  font-size: 0.9rem;
 }

@@ -161,7 +161,7 @@ const InputPGSearchByApplicationID: React.FC<{
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           type="submit"
-          style={{ fontSize: "0.9rem", marginTop: "0" }}
+          style={{ fontSize: "0.8rem", marginTop: "0" }}
           disabled={buttonDisabled}
         >
           Search by Application ID

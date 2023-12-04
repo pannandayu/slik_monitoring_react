@@ -10,7 +10,9 @@ const SLIKRequestAttemptPG: React.FC<{
 
   return (
     <div className={styles["client-data"]}>
-      <h2>Latest Request</h2>
+      <h2 style={{ marginTop: "0.75rem", marginBottom: "0.75rem" }}>
+        Latest Request
+      </h2>
       <div className={styles["last-request"]}>
         {latestRequest.map((item) => {
           return (
@@ -27,7 +29,13 @@ const SLIKRequestAttemptPG: React.FC<{
               <h3>Refresh? {item.refresh === "1" ? "Yes" : "No"}</h3>
               <h3>
                 Screening{" "}
-                <p style={{ textAlign: "center", marginTop: 0 }}>
+                <p
+                  style={{
+                    textAlign: "center",
+                    marginTop: 0,
+                    // marginBottom: "0.75rem",
+                  }}
+                >
                   {item.screening}
                 </p>
               </h3>
@@ -37,11 +45,13 @@ const SLIKRequestAttemptPG: React.FC<{
       </div>
       {olderRequests.length > 0 ? (
         <Fragment>
-          <h2>SLIK Request Attempt(s)</h2>
+          <h2 style={{ marginTop: "0.75rem", marginBottom: "0.75rem" }}>
+            SLIK Request Attempt(s)
+          </h2>
           <table className={styles.table}>
             <thead>
               <tr>
-                <th>Order ID / App No.</th>
+                <th>Order ID</th>
                 <th>App ID</th>
                 <th>Insert Date</th>
                 <th>Status</th>

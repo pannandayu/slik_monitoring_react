@@ -36,51 +36,45 @@ const AboutClientMongo: React.FC<{
       <h2>More about the client...</h2>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <CardDataBox>
-          <div>
-            <h2>Personal Info</h2>
-            <h3>Name: {debitur_nama_sesuai_ktp}</h3>
-            <h3>ID Card No: {debitur_no_ktp}</h3>
-            <h3>Gender: {debitur_jenis_kelamin}</h3>
-            <h3>Age: {personalAge}</h3>
-            <h3>
-              SLIK Grading:{" "}
-              <span style={{ fontFamily: "Arial", fontWeight: "bolder" }}>
-                {grading_slik}
-              </span>
-            </h3>
-          </div>
+          <h2>Personal Info</h2>
+          <h3>Name: {debitur_nama_sesuai_ktp}</h3>
+          <h3>ID Card No: {debitur_no_ktp}</h3>
+          <h3>Gender: {debitur_jenis_kelamin}</h3>
+          <h3>Age: {personalAge}</h3>
+          <h3>
+            SLIK Grading:{" "}
+            <span style={{ fontFamily: "Arial", fontWeight: "bolder" }}>
+              {grading_slik}
+            </span>
+          </h3>
         </CardDataBox>
         <CardDataBox>
-          <div>
-            <h2>Spouse Info</h2>
-            {debitur_status_perkawinan === "01" && spouseData ? (
-              <Fragment>
-                <h3>Name: {spouse_ktp_name}</h3>
-                <h3>ID Card No: {spouse_ktp_no}</h3>
-                <h3>Gender: {debitur_jenis_kelamin === "P" ? "L" : "P"}</h3>
-                <h3>Age: {spouseAge}</h3>
-                <h3>
-                  SLIK Grading:{" "}
-                  <span style={{ fontFamily: "Arial", fontWeight: "bolder" }}>
-                    {grading_slik_pasangan}
-                  </span>
-                </h3>
-              </Fragment>
-            ) : (
-              "NOT MARRIED"
-            )}
-          </div>
+          <h2>Spouse Info</h2>
+          {debitur_status_perkawinan === "01" && spouseData ? (
+            <Fragment>
+              <h3>Name: {spouse_ktp_name}</h3>
+              <h3>ID Card No: {spouse_ktp_no}</h3>
+              <h3>Gender: {debitur_jenis_kelamin === "P" ? "L" : "P"}</h3>
+              <h3>Age: {spouseAge}</h3>
+              <h3>
+                SLIK Grading:{" "}
+                <span style={{ fontFamily: "Arial", fontWeight: "bolder" }}>
+                  {grading_slik_pasangan}
+                </span>
+              </h3>
+            </Fragment>
+          ) : (
+            "NOT MARRIED"
+          )}
         </CardDataBox>
         <CardDataBox>
-          <div>
-            <h2>Aggregate Info</h2>
-            <h3>
-              SLIK Grading:{" "}
-              <span style={{ fontFamily: "Arial", fontWeight: "bolder" }}>
-                {aggregate_slik_perorangan}
-              </span>
-            </h3>
-          </div>
+          <h2>Aggregate Info</h2>
+          <h3>
+            SLIK Grading:{" "}
+            <span style={{ fontFamily: "Arial", fontWeight: "bolder" }}>
+              {aggregate_slik_perorangan}
+            </span>
+          </h3>
         </CardDataBox>
       </div>
     </div>

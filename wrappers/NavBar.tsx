@@ -16,7 +16,7 @@ const NavBar: React.FC = () => {
           className={styles.sidebar}
         >
           <div className={styles["sidebar-title"]}>
-            <h1>SLIK Monitoring Dashboard</h1>
+            <h1 style={{ fontSize: "1.5rem" }}>SLIK Monitoring Dashboard</h1>
           </div>
           <NavItems href="/" title="Search" />
           <NavItems href="/statistics" title="Statistics" />
