@@ -35,7 +35,7 @@ class MongoDataClass implements MongoDataInterface {
   };
   scoring_dukcapil: string = "";
   scoring_dukcapil_pasangan: string = "";
-  last_approval_date: string = "";
+  last_approval_date?: string = "";
   slik? = {
     idRequestcbas: "",
     idPencariancbas: "",

@@ -69,7 +69,7 @@ const DashboardMongo: React.FC<{ data: MongoDataClass }> = ({ data }) => {
         <AboutClientMongo
           gradingData={mongoData}
           personalData={mongoPersonal}
-          spouseData={mongoSpouse} 
+          spouseData={mongoSpouse}
           personalAge={personalAge}
           spouseAge={spouseAge}
         />

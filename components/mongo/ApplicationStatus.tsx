@@ -2,7 +2,7 @@ const ApplicationStatus: React.FC<{
   statusData: {
     approval_status: string;
     approval_level: number;
-    last_approval_date: string;
+    last_approval_date?: string;
     approval_flag: string;
   };
 }> = ({ statusData }) => {
@@ -13,7 +13,11 @@ const ApplicationStatus: React.FC<{
       <h2>The status of this application is...</h2>
       <h3>
         {approval_status.startsWith("APPR") ? "Approved" : "Rejected"} on level{" "}
-        {approval_level} @ {last_approval_date.replaceAll("-", "/")} and{" "}
+        {approval_level}{" "}
+        {last_approval_date
+          ? ` @ ${last_approval_date.replaceAll("-", "/")}`
+          : ""}{" "}
+        and{" "}
         {approval_flag === "CLOSED"
           ? " already " + approval_flag
           : approval_flag}
