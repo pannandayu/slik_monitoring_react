@@ -13,6 +13,7 @@ const HitCBAS: React.FC<{
   const [hitCbas, setHitCbas] = useState<boolean>(false);
   const [hitButtonText, setHitButtonText] = useState<number>(0);
   const [searchingCbas, setSearchingCbas] = useState<boolean>(false);
+  const [cbasError, setCbasError] = useState<string>();
   const [cbasDataPersonal, setCbasDataPersonal] = useState<CBASPersonalInfo>(
     new CBASPersonalInfo()
   );
@@ -28,12 +29,14 @@ const HitCBAS: React.FC<{
     setCbasDataSpouse(new CBASSpouseInfo());
     setCbasDataAggregate(new CBASAggregateInfo());
     setHitButtonText(0);
+    setCbasError(undefined);
   }, [requestId, maritalStatus]);
 
   const postCbasHandler = async () => {
     setHitCbas(true);
     setHitButtonText(1);
     setSearchingCbas(true);
+    setCbasError(undefined);
     console.log("Requesting to CBAS now!");
 
     let appIdPersonal = requestId + "101";
@@ -87,7 +90,8 @@ const HitCBAS: React.FC<{
       setSearchingCbas(false);
       setHitCbas(false);
     } catch (error: any) {
-      console.error(error);
+      console.error(error.message);
+      setCbasError(error.message);
       setSearchingCbas(false);
       setHitCbas(false);
     }
@@ -294,6 +298,7 @@ const HitCBAS: React.FC<{
       ) : (
         ""
       )}
+      {cbasError && cbasError}
     </div>
   );
 };

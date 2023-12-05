@@ -6,6 +6,7 @@ const AboutClientMongo: React.FC<{
     grading_slik: string;
     grading_slik_pasangan: string;
     aggregate_slik_perorangan: string;
+    aggregate_slik_perorangan_brms?: string;
   };
   personalData:
     | {
@@ -19,8 +20,12 @@ const AboutClientMongo: React.FC<{
   personalAge: string | undefined;
   spouseAge: string | undefined;
 }> = ({ gradingData, personalData, spouseData, personalAge, spouseAge }) => {
-  const { grading_slik, grading_slik_pasangan, aggregate_slik_perorangan } =
-    gradingData;
+  const {
+    grading_slik,
+    grading_slik_pasangan,
+    aggregate_slik_perorangan,
+    aggregate_slik_perorangan_brms,
+  } = gradingData;
 
   const {
     debitur_nama_sesuai_ktp,
@@ -73,6 +78,13 @@ const AboutClientMongo: React.FC<{
             SLIK Grading:{" "}
             <span style={{ fontFamily: "Arial", fontWeight: "bolder" }}>
               {aggregate_slik_perorangan}
+            </span>
+          </h3>
+          <h3>
+            BRMS SLIK Grading:{" "}
+            <br />
+            <span style={{ fontFamily: "Arial", fontWeight: "bolder" }}>
+              {aggregate_slik_perorangan_brms || 'Not yet available.'}
             </span>
           </h3>
         </CardDataBox>

@@ -35,7 +35,7 @@ const HeaderMongo: React.FC<{
         Apprv. Surveyor <br /> {approval_surveyor}
       </h2>
       <h2 style={{ fontWeight: "normal", textAlign: "right" }}>
-        Appl. No <br /> {order_id}
+        Order ID <br /> {order_id}
       </h2>
     </div>
   );
