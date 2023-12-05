@@ -72,6 +72,7 @@ const DashboardPG: React.FC<{
         }}
       >
         <h1>Client's Data </h1>
+        <h1>Order ID: {personalInfoPG.application_no}</h1>
         <h1>Current Form: {mongoAdditionalData?.currentFormDesc} </h1>
       </div>
       <hr />
