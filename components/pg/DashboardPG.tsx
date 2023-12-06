@@ -65,14 +65,10 @@ const DashboardPG: React.FC<{
       className={styles["data-box"]}
     >
       <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          fontSize: "0.9rem",
-        }}
+        className={styles.dashboard}
       >
         <h1>Client's Data </h1>
-        <h1>Order ID: {personalInfoPG.application_no}</h1>
+        <h1>Request ID: {personalInfoPG.app_id.split("I")[0]+"I"}</h1>
         <h1>Current Form: {mongoAdditionalData?.currentFormDesc} </h1>
       </div>
       <hr />

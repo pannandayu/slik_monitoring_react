@@ -1,6 +1,8 @@
 import CardDataBox from "@/wrappers/CardDataBox";
 import { Fragment } from "react";
 
+const spanStyle = { fontFamily: "Arial", fontWeight: "bolder" };
+
 const AboutClientMongo: React.FC<{
   gradingData: {
     grading_slik: string;
@@ -47,10 +49,7 @@ const AboutClientMongo: React.FC<{
           <h3>Gender: {debitur_jenis_kelamin}</h3>
           <h3>Age: {personalAge}</h3>
           <h3>
-            SLIK Grading:{" "}
-            <span style={{ fontFamily: "Arial", fontWeight: "bolder" }}>
-              {grading_slik}
-            </span>
+            SLIK Grading: <span style={spanStyle}>{grading_slik}</span>
           </h3>
         </CardDataBox>
         <CardDataBox>
@@ -63,9 +62,7 @@ const AboutClientMongo: React.FC<{
               <h3>Age: {spouseAge}</h3>
               <h3>
                 SLIK Grading:{" "}
-                <span style={{ fontFamily: "Arial", fontWeight: "bolder" }}>
-                  {grading_slik_pasangan}
-                </span>
+                <span style={spanStyle}>{grading_slik_pasangan}</span>
               </h3>
             </Fragment>
           ) : (
@@ -76,15 +73,12 @@ const AboutClientMongo: React.FC<{
           <h2>Aggregate Info</h2>
           <h3>
             SLIK Grading:{" "}
-            <span style={{ fontFamily: "Arial", fontWeight: "bolder" }}>
-              {aggregate_slik_perorangan}
-            </span>
+            <span style={spanStyle}>{aggregate_slik_perorangan}</span>
           </h3>
           <h3>
-            BRMS SLIK Grading:{" "}
-            <br />
-            <span style={{ fontFamily: "Arial", fontWeight: "bolder" }}>
-              {aggregate_slik_perorangan_brms || 'Not yet available.'}
+            BRMS SLIK Grading: <br />
+            <span style={spanStyle}>
+              {aggregate_slik_perorangan_brms || "Not yet available."}
             </span>
           </h3>
         </CardDataBox>

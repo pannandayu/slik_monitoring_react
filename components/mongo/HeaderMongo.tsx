@@ -32,10 +32,10 @@ const HeaderMongo: React.FC<{
         Request ID <br /> {idPermintaanSlik || "Not yet available."}
       </h2>
       <h2 style={{ fontWeight: "normal", textAlign: "center" }}>
-        Apprv. Surveyor <br /> {approval_surveyor}
+        Order ID <br /> {order_id}
       </h2>
       <h2 style={{ fontWeight: "normal", textAlign: "right" }}>
-        Order ID <br /> {order_id}
+        Apprv. Surveyor <br /> {approval_surveyor}
       </h2>
     </div>
   );

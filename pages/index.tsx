@@ -5,6 +5,7 @@ import DashboardSwitch from "@/wrappers/DashboardSwitch";
 import { motion } from "framer-motion";
 import Input from "@/components/Input";
 import styles from "@/styles/Input.module.css";
+import authStyles from "@/styles/Auth.module.css";
 
 export default function Home(props: { password: string }) {
   const [formIsPG, setFormIsPG] = useState<boolean>(true);
@@ -27,14 +28,7 @@ export default function Home(props: { password: string }) {
   };
 
   return !auth ? (
-    <div
-      style={{
-        height: "50vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
+    <div className={authStyles.auth}>
       <div style={{ display: "block" }}>
         <div>
           <form onSubmit={authHandler}>
@@ -46,15 +40,7 @@ export default function Home(props: { password: string }) {
               ref={authRef}
             />
             <motion.button
-              style={{
-                backgroundColor: "#4caf50",
-                color: "white",
-                cursor: "pointer",
-                border: "none",
-                margin: "20px",
-                padding: "10px",
-                borderRadius: "8px",
-              }}
+              className={authStyles["auth-button"]}
               whileHover={{ backgroundColor: "#91c493", scale: 1.1 }}
               whileTap={{ backgroundColor: "#91c493", scale: 0.9 }}
             >

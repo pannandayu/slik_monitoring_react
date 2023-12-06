@@ -16,8 +16,8 @@ const SLIKRequestAttemptPG: React.FC<{
       <div className={styles["last-request"]}>
         {latestRequest.map((item) => {
           return (
-            <Fragment key={`${item.app_id}-${item.insert_date}`}>
-              <h3>CBAS Request ID {item.app_id.split("I")[0] + "I"}</h3>
+            <Fragment key={`${item.application_no}-${item.insert_date}`}>
+              <h3>Order ID {item.application_no}</h3>
               <h3>
                 @{" "}
                 {new Date(item.insert_date).toLocaleDateString() +
@@ -33,7 +33,6 @@ const SLIKRequestAttemptPG: React.FC<{
                   style={{
                     textAlign: "center",
                     marginTop: 0,
-                    // marginBottom: "0.75rem",
                   }}
                 >
                   {item.screening}

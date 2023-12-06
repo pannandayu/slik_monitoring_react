@@ -6,6 +6,10 @@ import CBASPersonalInfo from "@/classes/cbas/CBASPersonalInfo";
 import CBASSpouseInfo from "@/classes/cbas/CBASSpouseInfo";
 import CBASAggregateInfo from "@/classes/cbas/CBASAggregateInfo";
 
+const responseStyle = { marginTop: "1rem", color: "#CA5305" };
+const responseDivStyle = { display: "flex", gap: "3.5rem" };
+const notFoundStyle = { color: "red" };
+
 const HitCBAS: React.FC<{
   requestId: string;
   maritalStatus: string | null;
@@ -102,9 +106,7 @@ const HitCBAS: React.FC<{
     <CardDataBox>
       <div className={styles.frame}>
         <div className={styles["cbas-response"]}>
-          <h2 style={{ marginTop: "1rem", color: "#CA5305" }}>
-            Personal Response
-          </h2>
+          <h2 style={responseStyle}>Personal Response</h2>
           <h4>Name: {cbasDataPersonal.content?.namaDebitur}</h4>
           <h4>
             Request Date: {cbasDataPersonal.content?.tanggalPermintaan || "-"}
@@ -130,9 +132,7 @@ const HitCBAS: React.FC<{
     <CardDataBox>
       <div className={styles.frame}>
         <div className={styles["cbas-response"]}>
-          <h2 style={{ marginTop: "1rem", color: "#CA5305" }}>
-            Spouse Response
-          </h2>
+          <h2 style={responseStyle}>Spouse Response</h2>
           <h4>Name: {cbasDataSpouse.content?.namaDebitur}</h4>
           <h4>
             Request Date: {cbasDataSpouse.content?.tanggalPermintaan || "-"}
@@ -158,9 +158,7 @@ const HitCBAS: React.FC<{
     <CardDataBox>
       <div className={styles.frame}>
         <div className={styles["cbas-response"]}>
-          <h2 style={{ marginTop: "1rem", color: "#CA5305" }}>
-            Aggregate Response
-          </h2>
+          <h2 style={responseStyle}>Aggregate Response</h2>
           <h4>Category:</h4>
           <h4
             style={{
@@ -231,7 +229,7 @@ const HitCBAS: React.FC<{
         cbasDataPersonal.responseCode === "1" &&
         cbasDataPersonal.responseDesc.endsWith("success") ? (
           maritalStatus === "01" ? (
-            <div style={{ display: "flex", gap: "3.5rem" }}>
+            <div style={responseDivStyle}>
               {personalResponseBox}
               {cbasDataSpouse.responseCode === "1" &&
               cbasDataSpouse.responseDesc.endsWith("success") ? (
@@ -239,7 +237,7 @@ const HitCBAS: React.FC<{
               ) : (
                 <div className={styles.frame}>
                   <div>
-                    <h2 style={{ color: "red" }}>Spouse data not found.</h2>
+                    <h2 style={notFoundStyle}>Spouse data not found.</h2>
                   </div>
                 </div>
               )}
@@ -249,13 +247,13 @@ const HitCBAS: React.FC<{
               ) : (
                 <div className={styles.frame}>
                   <div>
-                    <h2 style={{ color: "red" }}>Aggregate data not found.</h2>
+                    <h2 style={notFoundStyle}>Aggregate data not found.</h2>
                   </div>
                 </div>
               )}
             </div>
           ) : (
-            <div style={{ display: "flex", gap: "100px" }}>
+            <div style={responseDivStyle}>
               {personalResponseBox}
               {cbasDataAggregate.responseCode === "1" &&
               cbasDataAggregate.responseDesc.endsWith("success") ? (
@@ -263,7 +261,7 @@ const HitCBAS: React.FC<{
               ) : (
                 <div className={styles.frame}>
                   <div>
-                    <h2 style={{ color: "red" }}>Aggregate data not found.</h2>
+                    <h2 style={notFoundStyle}>Aggregate data not found.</h2>
                   </div>
                 </div>
               )}
@@ -271,10 +269,10 @@ const HitCBAS: React.FC<{
           )
         ) : cbasDataSpouse.responseCode === "1" &&
           cbasDataSpouse.responseDesc.endsWith("success") ? (
-          <div style={{ display: "flex", gap: "3.5rem" }}>
+          <div style={responseDivStyle}>
             <div className={styles.frame}>
               <div>
-                <h2 style={{ color: "red" }}>Personal data not found.</h2>
+                <h2 style={notFoundStyle}>Personal data not found.</h2>
               </div>
             </div>
             {spouseResponseBox}
@@ -284,7 +282,7 @@ const HitCBAS: React.FC<{
             ) : (
               <div className={styles.frame}>
                 <div>
-                  <h2 style={{ color: "red" }}>Aggregate data not found.</h2>
+                  <h2 style={notFoundStyle}>Aggregate data not found.</h2>
                 </div>
               </div>
             )}
@@ -292,7 +290,7 @@ const HitCBAS: React.FC<{
         ) : (
           <div className={styles.frame}>
             <div>
-              <h2 style={{ color: "red" }}>All data not found.</h2>
+              <h2 style={notFoundStyle}>All data not found.</h2>
             </div>
           </div>
         )

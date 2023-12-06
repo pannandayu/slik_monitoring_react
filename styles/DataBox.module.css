@@ -87,7 +87,7 @@
 .table td {
   font-size: 0.85rem;
 }
- 
+
 .popup {
   position: fixed;
   bottom: 100%;
@@ -118,4 +118,14 @@
 
 .cbas-response h4 {
   font-size: 0.9rem;
+}
+
+.dashboard {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+}
+
+.dashboard h1 {
+  font-size: 1.35rem;
 }
