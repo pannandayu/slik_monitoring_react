@@ -5,6 +5,7 @@ import CardDataBox from "@/wrappers/CardDataBox";
 import CBASPersonalInfo from "@/classes/cbas/CBASPersonalInfo";
 import CBASSpouseInfo from "@/classes/cbas/CBASSpouseInfo";
 import CBASAggregateInfo from "@/classes/cbas/CBASAggregateInfo";
+import Image from "next/image";
 
 const responseStyle = { marginTop: "1rem", color: "#CA5305" };
 const responseDivStyle = { display: "flex", gap: "3.5rem" };
@@ -191,14 +192,12 @@ const HitCBAS: React.FC<{
           {hitButtonText === 1 ? (
             "Retry?"
           ) : (
-            <img
-              style={{
-                width: "50px",
-                height: "20px",
-                objectFit: "cover",
-              }}
-              src="/seabass.png"
-              alt="Seabass"
+            <Image
+              width={50}
+              height={20}
+              src={"/seabass.png"}
+              alt="Sebass"
+              style={{ objectFit: "cover" }}
             />
           )}
         </motion.button>
