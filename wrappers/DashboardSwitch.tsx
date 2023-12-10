@@ -26,7 +26,6 @@ const DashboardSwitch: React.FC<{ formIsPG: boolean }> = ({ formIsPG }) => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.03 }}
-              exit={{}}
             >
               {char}
             </motion.span>

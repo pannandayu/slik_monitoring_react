@@ -4,14 +4,16 @@ import styles from "@/styles/NavBar.module.css";
 
 const Content: React.FC<{ children?: ReactNode }> = ({ children }) => {
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1 }}
-      className={styles.content}
-    >
-      {children}
-    </motion.div>
+    <main>
+      <motion.div
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className={styles.content}
+      >
+        {children}
+      </motion.div>
+    </main>
   );
 };
 

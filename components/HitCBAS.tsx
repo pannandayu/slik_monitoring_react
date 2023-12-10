@@ -205,14 +205,11 @@ const HitCBAS: React.FC<{
       {searchingCbas && (
         <AnimatePresence mode="wait">
           <motion.div
-            key={
-              cbasDataPersonal.content?.nikDebitur ||
-              Math.random().toFixed(2).toString()
-            }
-            initial={{ opacity: 0, y: 20 }}
+            key={requestId}
+            initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            transition={{ duration: 1 }}
+            transition={{ duration: 0.25 }}
           >
             <h3
               style={{ margin: 0 }}

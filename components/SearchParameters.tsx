@@ -39,15 +39,24 @@ const SearchParameters: React.FC<{ form: string }> = ({ form }) => {
           {searchParameters &&
             searchParameters.map((item, index) => {
               return (
-                <h4 key={Object.keys(item)[0]}>{`• ${Object.keys(item)[0]} = ${
-                  Object.values(item)[0]
-                }`}</h4>
+                <h4 key={Object.keys(item)[0]}>{`• ${joinParam(
+                  Object.keys(item)[0]
+                )} = ${Object.values(item)[0]}`}</h4>
               );
             })}
         </motion.div>
       </AnimatePresence>
     </Fragment>
   );
+};
+
+const joinParam = (word: string): string => {
+  if (!word.includes("_")) {
+    return "not available";
+  }
+
+  const splittedWord = word.split("_");
+  return splittedWord[0].concat(" ").concat(splittedWord[1]);
 };
 
 export default SearchParameters;

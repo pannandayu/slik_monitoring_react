@@ -7,6 +7,7 @@ import Image from "next/image";
 
 const NavBar: React.FC = () => {
   const [mufLogoHovered, setMufLogoHovered] = useState<boolean>(false);
+
   return (
     <Fragment>
       <AnimatePresence mode="wait">
@@ -21,7 +22,7 @@ const NavBar: React.FC = () => {
             <h1 style={{ fontSize: "1.5rem" }}>SLIK Monitoring Dashboard</h1>
           </div>
           <NavItems href="/" title="Search" />
-          <NavItems href="/statistics" title="Statistics" />
+          <NavItems href="/cbas" title="CBAS Que" />
           <Link href="https://phabricator.muf.co.id" target="_blank">
             <Image
               width={0}
@@ -35,6 +36,8 @@ const NavBar: React.FC = () => {
               }}
               src={"/muf.png"}
               alt="MUF Logo"
+              priority={true}
+              quality={75}
               onMouseEnter={() => setMufLogoHovered(true)}
               onMouseLeave={() => setMufLogoHovered(false)}
             />
