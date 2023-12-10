@@ -1,7 +1,7 @@
 .sidebar {
   margin: 0;
   padding: 0;
-  width: 15rem;
+  width: 12.5rem;
   background-color: #f1f1f1;
   position: fixed;
   height: 100%;
@@ -13,12 +13,7 @@
 }
 
 .content {
-  margin-left: 15rem;
-  padding-top: 3rem;
+  margin-left: 12rem;
+  padding-top: 2rem;
   padding-left: 3rem;
-}
-
-.image {
-  width: 70%;
-  padding: 1rem;
 }

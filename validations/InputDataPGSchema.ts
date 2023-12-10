@@ -14,7 +14,7 @@ const InputDataValidationSchema = z.object({
       },
       {
         message:
-          "No. Aplikasi or Order ID must consist of PRECISELY 10 numeric characters.",
+          "Order ID must consist of PRECISELY 10 numeric characters.",
       }
     ),
   app_id: z

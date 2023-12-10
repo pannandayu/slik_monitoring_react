@@ -5,6 +5,11 @@ import CardDataBox from "@/wrappers/CardDataBox";
 import CBASPersonalInfo from "@/classes/cbas/CBASPersonalInfo";
 import CBASSpouseInfo from "@/classes/cbas/CBASSpouseInfo";
 import CBASAggregateInfo from "@/classes/cbas/CBASAggregateInfo";
+import Image from "next/image";
+
+const responseStyle = { marginTop: "1rem", color: "#CA5305" };
+const responseDivStyle = { display: "flex", gap: "3.5rem" };
+const notFoundStyle = { color: "red" };
 
 const HitCBAS: React.FC<{
   requestId: string;
@@ -13,6 +18,7 @@ const HitCBAS: React.FC<{
   const [hitCbas, setHitCbas] = useState<boolean>(false);
   const [hitButtonText, setHitButtonText] = useState<number>(0);
   const [searchingCbas, setSearchingCbas] = useState<boolean>(false);
+  const [cbasError, setCbasError] = useState<string>();
   const [cbasDataPersonal, setCbasDataPersonal] = useState<CBASPersonalInfo>(
     new CBASPersonalInfo()
   );
@@ -28,12 +34,14 @@ const HitCBAS: React.FC<{
     setCbasDataSpouse(new CBASSpouseInfo());
     setCbasDataAggregate(new CBASAggregateInfo());
     setHitButtonText(0);
+    setCbasError(undefined);
   }, [requestId, maritalStatus]);
 
   const postCbasHandler = async () => {
     setHitCbas(true);
     setHitButtonText(1);
     setSearchingCbas(true);
+    setCbasError(undefined);
     console.log("Requesting to CBAS now!");
 
     let appIdPersonal = requestId + "101";
@@ -45,6 +53,7 @@ const HitCBAS: React.FC<{
           method: "POST",
           headers: { "Content-Type": "application/json" },
         });
+
         const cbasPersonalResponse = await cbasPersonalRequest.json();
 
         const cbasSpouseRequest = await fetch("/api/hit-cbas", {
@@ -87,7 +96,8 @@ const HitCBAS: React.FC<{
       setSearchingCbas(false);
       setHitCbas(false);
     } catch (error: any) {
-      console.error(error);
+      console.error(error.message);
+      setCbasError("504 CBAS Timeout :(");
       setSearchingCbas(false);
       setHitCbas(false);
     }
@@ -96,25 +106,24 @@ const HitCBAS: React.FC<{
   const personalResponseBox = (
     <CardDataBox>
       <div className={styles.frame}>
-        <div>
-          <h2 style={{ marginTop: "1rem", color: "#CA5305" }}>
-            Personal Response
-          </h2>
+        <div className={styles["cbas-response"]}>
+          <h2 style={responseStyle}>Personal Response</h2>
           <h4>Name: {cbasDataPersonal.content?.namaDebitur}</h4>
           <h4>
             Request Date: {cbasDataPersonal.content?.tanggalPermintaan || "-"}
           </h4>
-          <h4>
-            Category:{" "}
-            <span
-              style={{
-                backgroundColor: `${cbasDataPersonal.content?.color}`,
-                padding: "0.5rem",
-                borderRadius: "10px",
-              }}
-            >
-              {cbasDataPersonal.content?.kategoriDebitur}
-            </span>
+          <h4>Category:</h4>
+          <h4
+            style={{
+              backgroundColor: `${cbasDataPersonal.content?.color}`,
+              padding: "0.5rem",
+              borderRadius: "10px",
+              textAlign: "center",
+              width: "45%",
+              margin: "0",
+            }}
+          >
+            {cbasDataPersonal.content?.kategoriDebitur}
           </h4>
         </div>
       </div>
@@ -123,25 +132,24 @@ const HitCBAS: React.FC<{
   const spouseResponseBox = (
     <CardDataBox>
       <div className={styles.frame}>
-        <div>
-          <h2 style={{ marginTop: "1rem", color: "#CA5305" }}>
-            Spouse Response
-          </h2>
+        <div className={styles["cbas-response"]}>
+          <h2 style={responseStyle}>Spouse Response</h2>
           <h4>Name: {cbasDataSpouse.content?.namaDebitur}</h4>
           <h4>
             Request Date: {cbasDataSpouse.content?.tanggalPermintaan || "-"}
           </h4>
-          <h4>
-            Category:{" "}
-            <span
-              style={{
-                backgroundColor: `${cbasDataSpouse.content?.color}`,
-                padding: "0.5rem",
-                borderRadius: "10px",
-              }}
-            >
-              {cbasDataSpouse.content?.kategoriDebitur}
-            </span>
+          <h4>Category:</h4>
+          <h4
+            style={{
+              backgroundColor: `${cbasDataSpouse.content?.color}`,
+              padding: "0.5rem",
+              borderRadius: "10px",
+              textAlign: "center",
+              width: "45%",
+              margin: "0",
+            }}
+          >
+            {cbasDataSpouse.content?.kategoriDebitur}
           </h4>
         </div>
       </div>
@@ -150,21 +158,20 @@ const HitCBAS: React.FC<{
   const aggregateResponseBox = (
     <CardDataBox>
       <div className={styles.frame}>
-        <div>
-          <h2 style={{ marginTop: "1rem", color: "#CA5305" }}>
-            Aggregate Response
-          </h2>
-          <h4>
-            Category:{" "}
-            <span
-              style={{
-                backgroundColor: `${cbasDataAggregate.contentDebitur?.color}`,
-                padding: "0.5rem",
-                borderRadius: "10px",
-              }}
-            >
-              {cbasDataAggregate.contentDebitur?.kategoriAgregat}
-            </span>
+        <div className={styles["cbas-response"]}>
+          <h2 style={responseStyle}>Aggregate Response</h2>
+          <h4>Category:</h4>
+          <h4
+            style={{
+              backgroundColor: `${cbasDataAggregate.contentDebitur?.color}`,
+              padding: "0.5rem",
+              borderRadius: "10px",
+              textAlign: "center",
+              width: "45%",
+              margin: "0",
+            }}
+          >
+            {cbasDataAggregate.contentDebitur?.kategoriAgregat}
           </h4>
         </div>
       </div>
@@ -185,14 +192,12 @@ const HitCBAS: React.FC<{
           {hitButtonText === 1 ? (
             "Retry?"
           ) : (
-            <img
-              style={{
-                width: "50px",
-                height: "20px",
-                objectFit: "cover",
-              }}
-              src="/seabass.png"
-              alt="Seabass"
+            <Image
+              width={50}
+              height={20}
+              src={"/seabass.png"}
+              alt="Sebass"
+              style={{ objectFit: "cover" }}
             />
           )}
         </motion.button>
@@ -200,14 +205,11 @@ const HitCBAS: React.FC<{
       {searchingCbas && (
         <AnimatePresence mode="wait">
           <motion.div
-            key={
-              cbasDataPersonal.content?.nikDebitur ||
-              Math.random().toFixed(2).toString()
-            }
-            initial={{ opacity: 0, y: 20 }}
+            key={requestId}
+            initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            transition={{ duration: 1 }}
+            transition={{ duration: 0.25 }}
           >
             <h3
               style={{ margin: 0 }}
@@ -223,7 +225,7 @@ const HitCBAS: React.FC<{
         cbasDataPersonal.responseCode === "1" &&
         cbasDataPersonal.responseDesc.endsWith("success") ? (
           maritalStatus === "01" ? (
-            <div style={{ display: "flex", gap: "3.5rem" }}>
+            <div style={responseDivStyle}>
               {personalResponseBox}
               {cbasDataSpouse.responseCode === "1" &&
               cbasDataSpouse.responseDesc.endsWith("success") ? (
@@ -231,7 +233,7 @@ const HitCBAS: React.FC<{
               ) : (
                 <div className={styles.frame}>
                   <div>
-                    <h2 style={{ color: "red" }}>Spouse data not found.</h2>
+                    <h2 style={notFoundStyle}>Spouse data not found.</h2>
                   </div>
                 </div>
               )}
@@ -241,13 +243,13 @@ const HitCBAS: React.FC<{
               ) : (
                 <div className={styles.frame}>
                   <div>
-                    <h2 style={{ color: "red" }}>Aggregate data not found.</h2>
+                    <h2 style={notFoundStyle}>Aggregate data not found.</h2>
                   </div>
                 </div>
               )}
             </div>
           ) : (
-            <div style={{ display: "flex", gap: "100px" }}>
+            <div style={responseDivStyle}>
               {personalResponseBox}
               {cbasDataAggregate.responseCode === "1" &&
               cbasDataAggregate.responseDesc.endsWith("success") ? (
@@ -255,7 +257,7 @@ const HitCBAS: React.FC<{
               ) : (
                 <div className={styles.frame}>
                   <div>
-                    <h2 style={{ color: "red" }}>Aggregate data not found.</h2>
+                    <h2 style={notFoundStyle}>Aggregate data not found.</h2>
                   </div>
                 </div>
               )}
@@ -263,10 +265,10 @@ const HitCBAS: React.FC<{
           )
         ) : cbasDataSpouse.responseCode === "1" &&
           cbasDataSpouse.responseDesc.endsWith("success") ? (
-          <div style={{ display: "flex", gap: "3.5rem" }}>
+          <div style={responseDivStyle}>
             <div className={styles.frame}>
               <div>
-                <h2 style={{ color: "red" }}>Personal data not found.</h2>
+                <h2 style={notFoundStyle}>Personal data not found.</h2>
               </div>
             </div>
             {spouseResponseBox}
@@ -276,7 +278,7 @@ const HitCBAS: React.FC<{
             ) : (
               <div className={styles.frame}>
                 <div>
-                  <h2 style={{ color: "red" }}>Aggregate data not found.</h2>
+                  <h2 style={notFoundStyle}>Aggregate data not found.</h2>
                 </div>
               </div>
             )}
@@ -284,13 +286,14 @@ const HitCBAS: React.FC<{
         ) : (
           <div className={styles.frame}>
             <div>
-              <h2 style={{ color: "red" }}>All data not found.</h2>
+              <h2 style={notFoundStyle}>All data not found.</h2>
             </div>
           </div>
         )
       ) : (
         ""
       )}
+      {cbasError && cbasError}
     </div>
   );
 };

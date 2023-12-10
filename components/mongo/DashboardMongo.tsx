@@ -57,10 +57,9 @@ const DashboardMongo: React.FC<{ data: MongoDataClass }> = ({ data }) => {
       className={styles["data-box"]}
     >
       <div className={styles["client-data"]}>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <h1 style={{ fontWeight: "bolder", textAlign: "center" }}>
-            Client's Data
-          </h1>
+        <div className={styles.dashboard}>
+          <h1>Client's Data</h1>
+          <h1>{mongoData.current_form_desc}</h1>
           <h1>Created @ {mongoData.order_created_date}</h1>
         </div>
         <hr />

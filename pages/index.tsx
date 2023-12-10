@@ -1,60 +1,65 @@
-import React, { FormEvent, useRef, useState } from "react";
+import React, { FormEvent, useContext, useRef, useState } from "react";
 import Title from "@/components/Title";
 import FormSwitch from "@/wrappers/FormSwitch";
 import DashboardSwitch from "@/wrappers/DashboardSwitch";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Input from "@/components/Input";
 import styles from "@/styles/Input.module.css";
+import authStyles from "@/styles/Auth.module.css";
+import AuthContext from "@/context/auth-context";
+import CBASContext from "@/context/cbas-context";
+import ModalCard from "@/wrappers/Modal";
 
 export default function Home(props: { password: string }) {
+  const authContext = useContext(AuthContext);
+  const cbasContext = useContext(CBASContext);
   const [formIsPG, setFormIsPG] = useState<boolean>(true);
-
-  const [auth, setAuth] = useState<boolean | null>(null);
-
-  const authHandler: React.FormEventHandler = (event: FormEvent) => {
-    event.preventDefault();
-    if (authRef.current?.value === props.password) {
-      setAuth(true);
-    } else {
-      setAuth(false);
-    }
-  };
-
+  const [passwordKey, setPasswordKey] = useState<string>();
   const authRef = useRef<HTMLInputElement>(null);
 
   const setFormIsPGHandler = (state: boolean) => {
     setFormIsPG(state);
   };
 
-  return !auth ? (
-    <div
-      style={{
-        height: "50vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
+  const authHandler: React.FormEventHandler = (event: FormEvent) => {
+    event.preventDefault();
+    if (authRef.current?.value === props.password) {
+      authContext.authHandler(true);
+    } else {
+      authContext.authHandler(false);
+    }
+
+    setPasswordKey(authRef.current?.value || "null");
+  };
+
+  return !authContext.isAuth ? (
+    <div className={authStyles.auth}>
       <div style={{ display: "block" }}>
         <div>
+          {cbasContext.isError && (
+            <ModalCard
+              isOpen={cbasContext.isError}
+              onClose={() => cbasContext.errorHandler(false, null)}
+            >
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: [0, 1.2, 1] }}
+                transition={{ duration: 0.5 }}
+              >
+                <h1>{cbasContext.errorMessage}</h1>
+              </motion.div>
+            </ModalCard>
+          )}
           <form onSubmit={authHandler}>
             <Input
-              labelName="Whisper me the magic word"
+              labelName="Password please."
               idForName="auth"
               type="password"
               className={styles.input}
               ref={authRef}
             />
             <motion.button
-              style={{
-                backgroundColor: "#4caf50",
-                color: "white",
-                cursor: "pointer",
-                border: "none",
-                margin: "20px",
-                padding: "10px",
-                borderRadius: "8px",
-              }}
+              className={authStyles["auth-button"]}
               whileHover={{ backgroundColor: "#91c493", scale: 1.1 }}
               whileTap={{ backgroundColor: "#91c493", scale: 0.9 }}
             >
@@ -63,20 +68,41 @@ export default function Home(props: { password: string }) {
           </form>
         </div>
         <div>
-          {auth === false && (
-            <motion.h4
-              initial={{ y: -20 }}
-              animate={{ y: 0 }}
-              style={{ color: "red", margin: 0 }}
-            >
-              Wrong password.
-            </motion.h4>
+          {authContext.isAuth === false && (
+            <AnimatePresence mode="wait">
+              <motion.h4
+                key={passwordKey}
+                initial={{ opacity: 0 }}
+                animate={{
+                  x: [0, -5, 5, -5, 5, -5, 0],
+                  opacity: [1, 0.8, 1, 0.8, 1],
+                }}
+                transition={{ duration: 0.5 }}
+                style={{ color: "red", margin: 0 }}
+              >
+                Wrong password.
+              </motion.h4>
+            </AnimatePresence>
           )}
         </div>
       </div>
     </div>
   ) : (
     <div>
+      {cbasContext.isError && (
+        <ModalCard
+          isOpen={cbasContext.isError}
+          onClose={() => cbasContext.errorHandler(false, null)}
+        >
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: [0, 1.2, 1] }}
+            transition={{ duration: 0.5 }}
+          >
+            <h2>{cbasContext.errorMessage}</h2>
+          </motion.div>
+        </ModalCard>
+      )}
       <h1>Find your client here.</h1>
       <h2>You can search by...</h2>
       <Title form={formIsPG ? "PG" : "Mongo"} />

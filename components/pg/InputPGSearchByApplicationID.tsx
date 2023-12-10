@@ -123,7 +123,6 @@ const InputPGSearchByApplicationID: React.FC<{
         onSubmit={applicationIDSubmitHandler}
         initial={{ y: -20 }}
         animate={{ y: 0 }}
-        // exit={{ y: -20 }}
         transition={{ duration: 0.2 }}
         className={styles.form}
         style={{
@@ -161,7 +160,7 @@ const InputPGSearchByApplicationID: React.FC<{
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           type="submit"
-          style={{ fontSize: "0.9rem", marginTop: "0" }}
+          style={{ fontSize: "0.8rem", marginTop: "0" }}
           disabled={buttonDisabled}
         >
           Search by Application ID

@@ -21,6 +21,7 @@ const DashboardPG: React.FC<{
     spouseInfo,
     slikResponseLog,
     screeningResults,
+    mongoAdditionalData,
   } = data;
 
   const [personalInfoPG, setPersonalInfoPG] = useState<PersonalInfoPGClass>(
@@ -38,7 +39,8 @@ const DashboardPG: React.FC<{
   const [gradingResultHistoryPG, setGradingResultHistoryPG] =
     useState<GradingResultPGClass>(new GradingResultPGClass());
 
-  // const [requestId, setRequestId] = useState<string>("");
+  const [mongoAddsData, setMongoAddsData] =
+    useState<AllPGDataInterface["mongoAdditionalData"]>();
 
   useEffect(() => {
     setPersonalInfoPG({
@@ -52,6 +54,7 @@ const DashboardPG: React.FC<{
     });
     setSlikRequestInfoPG(slikResponseLog);
     setGradingResultHistoryPG(screeningResults);
+    setMongoAddsData(mongoAdditionalData);
   }, [data]);
 
   return (
@@ -61,7 +64,13 @@ const DashboardPG: React.FC<{
       transition={{ duration: 0.3 }}
       className={styles["data-box"]}
     >
-      <h1>Client's Data </h1>
+      <div
+        className={styles.dashboard}
+      >
+        <h1>Client's Data </h1>
+        <h1>Request ID: {personalInfoPG.app_id.split("I")[0]+"I"}</h1>
+        <h1>Current Form: {mongoAdditionalData?.currentFormDesc} </h1>
+      </div>
       <hr />
       <div className={styles.frame}>
         <PersonalInfoPG data={personalInfoPG} />
@@ -72,6 +81,15 @@ const DashboardPG: React.FC<{
       </div>
       <div className={styles.frame}>
         <GradingResultHistoryPG data={gradingResultHistoryPG} />
+      </div>
+      <div className={styles.frame}>
+        <h2 style={{ marginTop: "0.75rem", marginBottom: "0.75rem" }}>
+          BRMS Personal SLIK Aggregate Result =
+          <span style={{ fontWeight: "lighter", color: '#843636' }}>
+            {" "}
+            {mongoAddsData?.aggregateBrms}
+          </span>
+        </h2>
       </div>
       <div className={styles.frame}>
         <HitCBAS

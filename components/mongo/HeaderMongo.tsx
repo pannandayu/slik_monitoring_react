@@ -26,16 +26,16 @@ const HeaderMongo: React.FC<{
           textAlign: "left",
         }}
       >
-        Application ID: <br /> {application_id}
+        Application ID <br /> {application_id}
       </h2>
       <h2 style={{ fontWeight: "normal", textAlign: "center" }}>
-        Request ID: <br /> {idPermintaanSlik || "Not yet available."}
+        Request ID <br /> {idPermintaanSlik || "Not yet available."}
       </h2>
       <h2 style={{ fontWeight: "normal", textAlign: "center" }}>
-        Apprv. Surveyor: <br /> {approval_surveyor}
+        Order ID <br /> {order_id}
       </h2>
       <h2 style={{ fontWeight: "normal", textAlign: "right" }}>
-        Appl. No: <br /> {order_id}
+        Apprv. Surveyor <br /> {approval_surveyor}
       </h2>
     </div>
   );

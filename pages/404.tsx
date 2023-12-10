@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const FourOFour: React.FC = () => {
   return (
     <div
@@ -8,7 +10,14 @@ const FourOFour: React.FC = () => {
       }}
     >
       <h1>Page Not Found</h1>
-      <img style={{ width: "25%" }} src="/lost.png" alt="lost" />
+      <Image
+        width={0}
+        height={0}
+        sizes="100vw"
+        style={{ width: "25%", height: "auto" }}
+        src={"/lost.png"}
+        alt="Are you lost?"
+      />
     </div>
   );
 };

@@ -38,7 +38,9 @@ const GradingResultHistoryPG: React.FC<{
 
   return (
     <div className={styles["client-data"]}>
-      <h2>Grading Result History / Records</h2>
+      <h2 style={{ marginTop: "0.75rem", marginBottom: "0.75rem" }}>
+        Grading Result History / Records
+      </h2>
       <table className={styles.table}>
         <thead>
           <tr>
@@ -72,6 +74,7 @@ const GradingResultHistoryPG: React.FC<{
                   }
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
+                  exit={{ scale: 0 }}
                   transition={{ duration: 0.15 }}
                   className={styles.popup}
                 >
@@ -124,6 +127,7 @@ const GradingResultHistoryPG: React.FC<{
                         }
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
+                        exit={{ scale: 0 }}
                         transition={{ duration: 0.15 }}
                         className={styles.popup}
                       >
@@ -181,6 +185,7 @@ const GradingResultHistoryPG: React.FC<{
                         }
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
+                        exit={{ scale: 0 }}
                         transition={{ duration: 0.15 }}
                         className={styles.popup}
                       >

@@ -18,7 +18,12 @@ const SearchParameters: React.FC<{ form: string }> = ({ form }) => {
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -50 }}
-          transition={{ type: "spring", stiffness: 250, damping: 20, delay: 0.5 }}
+          transition={{
+            type: "spring",
+            stiffness: 250,
+            damping: 20,
+            delay: 0.5,
+          }}
         >
           <motion.h2
             animate={{
@@ -34,15 +39,24 @@ const SearchParameters: React.FC<{ form: string }> = ({ form }) => {
           {searchParameters &&
             searchParameters.map((item, index) => {
               return (
-                <h4 key={Object.keys(item)[0]}>{`• ${Object.keys(item)[0]} = ${
-                  Object.values(item)[0]
-                }`}</h4>
+                <h4 key={Object.keys(item)[0]}>{`• ${joinParam(
+                  Object.keys(item)[0]
+                )} = ${Object.values(item)[0]}`}</h4>
               );
             })}
         </motion.div>
       </AnimatePresence>
     </Fragment>
   );
+};
+
+const joinParam = (word: string): string => {
+  if (!word.includes("_")) {
+    return "not available";
+  }
+
+  const splittedWord = word.split("_");
+  return splittedWord[0].concat(" ").concat(splittedWord[1]);
 };
 
 export default SearchParameters;

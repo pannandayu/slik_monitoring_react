@@ -1,0 +1,17 @@
+.auth {
+  height: 60vh;
+  width: 120vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-button {
+  background-color: #4caf50;
+  color: white;
+  cursor: pointer;
+  border: none;
+  margin: 20px;
+  padding: 10px;
+  border-radius: 8px;
+}

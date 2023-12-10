@@ -6,6 +6,10 @@ interface MongoDataInterface {
   customer_name: string;
   grading_slik: string;
   grading_slik_pasangan: string;
+  current_form_desc: string;
+  approval_level: number;
+  approval_flag: string;
+  approval_status: string;
   approval_surveyor: string;
   detail: {
     debitur: {
@@ -29,7 +33,8 @@ interface MongoDataInterface {
   };
   scoring_dukcapil: string;
   scoring_dukcapil_pasangan: string;
-  last_approval_date: string;
+  aggregate_slik_perorangan_brms?: string;
+  last_approval_date?: string;
   slik?: {
     idRequestcbas: string;
     idPencariancbas: string;

@@ -2,6 +2,9 @@ import DataContext from "@/context/data-context";
 import { Fragment, useContext } from "react";
 import SearchParameters from "./SearchParameters";
 import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
+
+const imageStyle = { width: "3%", height: "auto" };
 
 const Title: React.FC<{ form: string }> = ({ form }) => {
   const dataContext = useContext(DataContext);
@@ -20,7 +23,14 @@ const Title: React.FC<{ form: string }> = ({ form }) => {
       >
         <span>
           Searching in PostgreSQL
-          <img style={{ width: "3%" }} src="/postgre.png" />
+          <Image
+            width={0}
+            height={0}
+            sizes="100vw"
+            style={imageStyle}
+            src={"/postgre.png"}
+            alt="PostgreSQL Logo"
+          />
         </span>
       </motion.div>
     </AnimatePresence>
@@ -37,7 +47,14 @@ const Title: React.FC<{ form: string }> = ({ form }) => {
       >
         <span>
           Searching in MongoDB
-          <img style={{ width: "3%" }} src="/mongo.png" alt="MongoDB" />
+          <Image
+            width={0}
+            height={0}
+            sizes="100vw"
+            style={imageStyle}
+            src={"/mongo.png"}
+            alt="MongoDB Logo"
+          />
         </span>
       </motion.span>
     </AnimatePresence>

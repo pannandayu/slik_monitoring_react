@@ -1,11 +1,14 @@
 import CardDataBox from "@/wrappers/CardDataBox";
 import { Fragment } from "react";
 
+const spanStyle = { fontFamily: "Arial", fontWeight: "bolder" };
+
 const AboutClientMongo: React.FC<{
   gradingData: {
     grading_slik: string;
     grading_slik_pasangan: string;
     aggregate_slik_perorangan: string;
+    aggregate_slik_perorangan_brms?: string;
   };
   personalData:
     | {
@@ -19,8 +22,12 @@ const AboutClientMongo: React.FC<{
   personalAge: string | undefined;
   spouseAge: string | undefined;
 }> = ({ gradingData, personalData, spouseData, personalAge, spouseAge }) => {
-  const { grading_slik, grading_slik_pasangan, aggregate_slik_perorangan } =
-    gradingData;
+  const {
+    grading_slik,
+    grading_slik_pasangan,
+    aggregate_slik_perorangan,
+    aggregate_slik_perorangan_brms,
+  } = gradingData;
 
   const {
     debitur_nama_sesuai_ktp,
@@ -36,51 +43,44 @@ const AboutClientMongo: React.FC<{
       <h2>More about the client...</h2>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <CardDataBox>
-          <div>
-            <h2>Personal Info</h2>
-            <h3>Name: {debitur_nama_sesuai_ktp}</h3>
-            <h3>ID Card No: {debitur_no_ktp}</h3>
-            <h3>Gender: {debitur_jenis_kelamin}</h3>
-            <h3>Age: {personalAge}</h3>
-            <h3>
-              SLIK Grading:{" "}
-              <span style={{ fontFamily: "Arial", fontWeight: "bolder" }}>
-                {grading_slik}
-              </span>
-            </h3>
-          </div>
+          <h2>Personal Info</h2>
+          <h3>Name: {debitur_nama_sesuai_ktp}</h3>
+          <h3>ID Card No: {debitur_no_ktp}</h3>
+          <h3>Gender: {debitur_jenis_kelamin}</h3>
+          <h3>Age: {personalAge}</h3>
+          <h3>
+            SLIK Grading: <span style={spanStyle}>{grading_slik}</span>
+          </h3>
         </CardDataBox>
         <CardDataBox>
-          <div>
-            <h2>Spouse Info</h2>
-            {debitur_status_perkawinan === "01" && spouseData ? (
-              <Fragment>
-                <h3>Name: {spouse_ktp_name}</h3>
-                <h3>ID Card No: {spouse_ktp_no}</h3>
-                <h3>Gender: {debitur_jenis_kelamin === "P" ? "L" : "P"}</h3>
-                <h3>Age: {spouseAge}</h3>
-                <h3>
-                  SLIK Grading:{" "}
-                  <span style={{ fontFamily: "Arial", fontWeight: "bolder" }}>
-                    {grading_slik_pasangan}
-                  </span>
-                </h3>
-              </Fragment>
-            ) : (
-              "NOT MARRIED"
-            )}
-          </div>
+          <h2>Spouse Info</h2>
+          {debitur_status_perkawinan === "01" && spouseData ? (
+            <Fragment>
+              <h3>Name: {spouse_ktp_name}</h3>
+              <h3>ID Card No: {spouse_ktp_no}</h3>
+              <h3>Gender: {debitur_jenis_kelamin === "P" ? "L" : "P"}</h3>
+              <h3>Age: {spouseAge}</h3>
+              <h3>
+                SLIK Grading:{" "}
+                <span style={spanStyle}>{grading_slik_pasangan}</span>
+              </h3>
+            </Fragment>
+          ) : (
+            "NOT MARRIED"
+          )}
         </CardDataBox>
         <CardDataBox>
-          <div>
-            <h2>Aggregate Info</h2>
-            <h3>
-              SLIK Grading:{" "}
-              <span style={{ fontFamily: "Arial", fontWeight: "bolder" }}>
-                {aggregate_slik_perorangan}
-              </span>
-            </h3>
-          </div>
+          <h2>Aggregate Info</h2>
+          <h3>
+            SLIK Grading:{" "}
+            <span style={spanStyle}>{aggregate_slik_perorangan}</span>
+          </h3>
+          <h3>
+            BRMS SLIK Grading: <br />
+            <span style={spanStyle}>
+              {aggregate_slik_perorangan_brms || "Not yet available."}
+            </span>
+          </h3>
         </CardDataBox>
       </div>
     </div>
